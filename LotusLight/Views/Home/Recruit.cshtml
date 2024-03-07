@@ -1,0 +1,123 @@
+﻿
+@{
+    ViewBag.Title = "華光招募";
+}
+
+<main class="recruitPage border">
+    <!-- bannerBlock -->
+    <div class="bannerBlock border">
+        <div class="banner_06 border">
+            <div class="bannerTitleBlock border">
+                <img src="~/assets/img/elements/titleImage/titleImage_06.png" alt="">
+                <p>Recruits</p>
+            </div>
+        </div>
+        <div class="breadCrumbs border">
+            <ul>
+                <li><a href="@Url.Action("Index","Home")">首頁</a></li>
+                <li class="disPlay"><a href="@Url.Action("Recruit","Home")">華光招募</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <main class="main">
+        <div class="recruitContentBlock border">
+            <div class="recruitTitleBlock border">
+                <p class="mainTitle"><img src="~/assets/img/elements/sloganImage_02.png" alt=""></p>
+                <p class="subTitle">歡迎加入華光志工、會員</p>
+            </div>
+            <div class="recruitContents border">
+                <p>蓮生活佛說：「做華光功德會，就是在聚集資糧，就是在聚集福德，增加你的福氣，增加你的功德。」聚集功德資糧最快的方法之一，就是發心多做善事。所以我們每做一件善事，就是在耕耘自己的福田，為將來準備福份資糧。</p>
+                <p>華光功德會是一個非營利的慈善機構，我們實地去做善事，以最務實的方式實踐佛法「無緣大慈，同體大悲」的思想，用我們每一雙付出的手，將蓮生活佛對眾生的愛散播在人世間。</p>
+                <p>有您的支持，我們才能和您一起，以慈善及關懷的心，共同負起慈善救濟的重任，以實踐大乘菩薩的精神，幫助每一個需要的人。</p>
+                <p>華光功德會招收的會員和救濟對象，沒有地域、種族、宗教、年齡、性別的分別。讓我們集合大家的善念和力量，依著醫療、社會救濟、教育、文化等四大志業的方向，還有臨終關懷專案等方針，一步一步地，體現佛教慈悲喜捨的四無量心，也一步一步地，耕耘每一個人的福田。</p>
+            </div>
+        </div>
+        <div class="recruitMembers border">
+            <div class="contentPart border">
+                <div class="recruitMemberImage">
+                    <img src="~/assets/img/elements/materialImage_05.jpg" alt="">
+                </div>
+            </div>
+            <div class="contentPart border">
+                <div class="recruitMemContentBlock border">
+                    <div class="recruitMemTitleBlock border">
+                        <p class="mainTitle">成為華光會員</p>
+                    </div>
+                    <div class="recruitMemContents border">
+                        <p>為了推動各項社會服務，幫助更多人，華光功德會招收會員，分為兩種：</p>
+                        <p>「永久會員」會費 10,000 元</p>
+                        <p>「一般會員」會費 每年 1,200 元</p>
+                        <p>您可以一次繳清會費，也可以選擇分期繳付，讓您行善沒有壓力。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="contentPart border">
+                <div class="recruitMemContents">
+                    <p>請於下載專區下載「個人入會申請書」，填寫完成後即可傳真；也可填妥資料，郵寄至華光功德會總會，我們將立即為您處理。</p>
+                    <p><span>傳真電話：</span><span>總會(07)241-9885</span><span class="dividerBlock"></span><span>中區(04)2406-0849</span><span class="dividerBlock"></span><span>南區(07)521-2572</span> </p>
+                </div>
+            </div>
+        </div>
+        <div class="recruitVolunts border">
+            <div class="recruitTitleBlock border">
+                <p class="mainTitle"><img src="~/assets/img/elements/sloganImage_03.png" alt=""></p>
+            </div>
+            <div class="recruitVoluntRows border">
+                @foreach (LotusLight.Models.Recruit item in (List<LotusLight.Models.Recruit>)ViewBag.ObjList)
+                {
+                    <div class="rowsItem border">
+                        <div class="rowPart border">
+                            <div class="rowImage"><img src="@Url.Action("GetRecruitImage","Act")/@item.Sn" alt=""></div>
+                        </div>
+                        <div class="rowPart border">
+                            <div class="rowTitle border">
+                                <p class="mainTitle">@item.Title</p>
+                                <p class="subTitle">@item.SubTitle</p>
+                            </div>
+                            <div class="rowContents border">
+                                <p>@Html.Raw(item.P1)</p>
+                                <p>@Html.Raw(item.P2)</p>
+                            </div>
+                            <div class="btnMore"><p>閱讀更多</p></div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <!-- lightBox for readMoreContent 詳細內容燈箱 -->
+        <div class="lightBoxMoreBlock border">
+            <div class="lightBox border">
+                <div class="lightBoxContent">
+                    <div class="lightBoxHeader border">
+                        <p class="mainTitle"></p>
+                        <div class="cancel border">
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="lightBoxBody">
+                        <div class="lightBoxImage">
+                            <img src="#" alt="">
+                        </div>
+                        <div class="lightBoxContents border">
+                            
+                        </div>
+                    </div>
+                    <div class="lightBoxFooter"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+</main>
+
+@section scripts{
+    <script type="text/javascript">
+        $(".btnMore").click((e) => {
+            var div = $(e.currentTarget).parents(".rowsItem");
+            $(".lightBoxImage img")[0].src = div.find("img")[0].src;
+            $(".lightBoxHeader .mainTitle").text(div.find(".mainTitle").text());
+            $(".lightBoxBody .lightBoxContents").html(div.find(".rowContents").html());
+        });
+    </script>
+}

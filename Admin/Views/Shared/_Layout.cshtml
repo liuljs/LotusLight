@@ -1,0 +1,182 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>華光功德會｜@ViewBag.Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-file-upload/4.0.11/uploadfile.min.css"
+          integrity="sha512-MudWpfaBG6v3qaF+T8kMjKJ1Qg8ZMzoPsT5yWujVfvIgYo2xgT1CvZq+r3Ks2kiUKcpo6/EUMyIUhb3ay9lG7A=="
+          crossorigin="anonymous" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="~/assets/css/backStyle.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="wrap">
+        <header>
+            <nav class="navbar navbar-light bg-light">
+                <a class="navbar-brand" href="@Url.Action("Carousel")">
+                    <img src="~/assets/img/elements/HGLogo_01.png" class="d-inline-block align-top">
+                </a>
+                <div class="loginBlock">
+                    <span id="managerId"></span><span class="sayHi">您好, @HttpContext.Current.User.Identity.Name</span>
+                    <button type="button" class="btn btn-primary btn-sm btnChange" id="btnChange">更改密碼</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" id="btnLogout">登出</button>
+                </div>
+                <div class="hamburgerBlock">
+                    <div class="hamburger hamburger--squeeze">
+                        <div class="hamburger-box">
+                            <div class="hamburger-inner"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="messageBoxBlock">
+                    <form class="changeForm" action="">
+                        <div class="boxHeader">
+                            <div class="boxTitleBlock">
+                                <p class="mainTitle">更改管理者密碼</p>
+                            </div>
+                            <div class="cancel">
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="boxBody">
+                            <label for="oldPsw">您的舊密碼</label>
+                            <div>
+                                <input type="password" name="oldPsw" id="oldPsw">
+                            </div>
+                            <label for="newPsw01">您的新密碼</label>
+                            <div>
+                                <input type="password" name="newPsw01" id="newPsw01">
+                            </div>
+                            <label for="newPsw02">確認新密碼</label>
+                            <div>
+                                <input type="password" name="newPsw02" id="newPsw02">
+                            </div>
+                        </div>
+                        <div class="boxFooter">
+                            <button type="reset" class="btn btn-secondary btn-sm">重填</button>
+                            <button type="button" class="btn btn-outline-success btn-sm btnChgPwd">確認</button>
+                        </div>
+                    </form>
+                </div>
+            </nav>
+        </header>
+        <nav class="col-md-2  d-md-block bg-light sideNav">
+            <div class="sidebarContent">
+                <ul class="nav flex-column">
+                    <li class="navItem"><a href="@Url.Action("Carousel")">輪播管理</a></li>
+                    <li class="navItem"><a href="@Url.Action("News")">消息管理</a></li>
+                    <li class="navItem"><a href="@Url.Action("Activity")">活動管理</a></li>
+                    <li class="navItem"><a href="@Url.Action("Recruit")">招募管理</a></li>
+                    <li class="navItem"><a href="@Url.Action("Related")">請購管理</a></li>
+                    <li class="navItem"><a href="@Url.Action("Video")">影片管理</a></li>
+                    <li class="navItem"><a href="@Url.Action("Contact")">聯絡資訊</a></li>
+                    <li class="navItem"><a href="@Url.Action("FavouriteLink")">友善連結</a></li>
+                    <li class="navItem"><a href="@Url.Action("Subscription")">訂閱管理</a></li>
+                    <li class="navItem"><a href="@Url.Action("Download")">檔案下載</a></li>
+                    <li class="navItem"><a href="@Url.Action("Member")">名單管理</a></li>
+                    <li class="navItem"><a href="@Url.Action("DonateRecord")">捐款紀錄</a></li>
+                </ul>
+            </div>
+        </nav>
+        @RenderBody()
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+            integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+            crossorigin="anonymous"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-file-upload/4.0.11/jquery.uploadfile.min.js"
+        integrity="sha512-uwNlWrX8+f31dKuSezJIHdwlROJWNkP6URRf+FSWkxSgrGRuiAreWzJLA2IpyRH9lN2H67IP5H4CxBcAshYGNw=="
+        crossorigin="anonymous"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="~/assets/js/backCommon.js"></script>
+    <script>
+        $("#btnLogout").click(() => {
+            window.location.href = "/LotusLightAdmin/Home/Logout";
+        });
+        $(".btnChgPwd").click(() => {
+
+            if ($("#oldPsw").val().trim().length == 0 || $("#newPsw01").val().trim().length == 0 || $("#newPsw02").val().trim().length == 0) {
+                Swal.fire('請填寫所有欄位！');
+                return;
+            }
+
+            if ($("#newPsw01").val().trim() != $("#newPsw02").val().trim()) {
+                Swal.fire('新密碼輸入不一致！');
+                return;
+            }
+
+            var postData = new FormData($(".changeForm")[0]);
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/LotusLightAdmin/Act/UpdPassword", true);
+            xhr.onload = function () {
+                if (this.status == 200 && this.responseText == "OK") {
+                    Swal.fire('變更成功！請重新登入。').then(() => {
+                        window.location.href = "/LotusLightAdmin/Home/Logout";
+                    });
+                } else {
+                    Swal.fire('變更失敗！請確認舊密碼是否正確。');
+                }
+            };
+            xhr.send(postData);
+        });
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+
+</html>
+
+@*<!DOCTYPE html>
+    <html>
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title - 我的 ASP.NET 應用程式</title>
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+    </head>
+    <body>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("應用程式名稱", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("首頁", "Index", "Home")</li>
+                        <li>@Html.ActionLink("關於", "About", "Home")</li>
+                        <li>@Html.ActionLink("連絡人", "Contact", "Home")</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - 我的 ASP.NET 應用程式</p>
+            </footer>
+        </div>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+    </body>
+    </html>*@

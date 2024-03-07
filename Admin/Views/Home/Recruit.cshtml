@@ -1,0 +1,199 @@
+﻿
+@{
+    ViewBag.Title = "招募管理";
+}
+
+<main class="col-md-10">
+    <h2>招募管理</h2>
+    <div class="recruitsContent">
+        <div class="titleBlock">
+            <h3>招募設定</h3>
+            <button type="button" class="btn btn-light btnExt" data-toggle="modal" data-target="#exampleModalCenteredScrollable">新增招募</button>
+        </div>
+        <!-- Modal -->
+        <form id="fmAddItem" action="@Url.Action("AddRecruit", "Act")" method="post" enctype="multipart/form-data">
+            <div class="modal fade" id="exampleModalCenteredScrollable" tabindex="-1"
+                 aria-labelledby="exampleModalCenteredScrollable" aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">新增招募訊息</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body addFormBlock">
+                            <div>
+                                <label for="addRecruitImage">招募圖片</label>
+                                <div>
+                                    <div class="custom-file">
+                                        <input type="file" id="addRecruitImage" name="addRecruitImage" class="custom-file-input addImage addTitleImage">
+                                        <label class="custom-file-label" for="addRecruitImage" aria-describedby="inputGroupFileAddon02">
+                                            上傳圖片
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="previewImageBlock">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="addTitle">招募標題</label>
+                                <input type="text" id="addTitle" name="addTitle" class="form-control addTitle" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="必填，50字內" maxlength="50" required>
+                            </div>
+                            <div>
+                                <label for="addSubTitle">招募副標題</label>
+                                <input type="text" id="addSubTitle" name="addSubTitle" class="form-control addSubTitle" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="選填，50字內" maxlength="50">
+                            </div>
+                            <div>
+                                <label for="addContent1">招募內容_段落1</label>
+                                <textarea class="form-control addContent1" id="addContent1" name="addContent1" placeholder="必填，2000字內" maxlength="2000" required></textarea>
+                            </div>
+                            <div>
+                                <label for="addContent2">招募內容_段落2</label>
+                                <textarea class="form-control addContent2" id="addContent2" name="addContent2" placeholder="選填，2500字內" maxlength="2500"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="reset" class="btn btn-secondary btnReset">重填</button>
+                            <button type="submit" class="btn btn-primary btnAdd">新增</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="contentsBlock">
+            <div class="container">
+                <div class="row">
+
+                    @foreach (Admin.Models.Recruit item in (List<Admin.Models.Recruit>)ViewBag.ObjList)
+                    {
+                        <div class="col-md-6 cards">
+                            <div class="card mb-4 shadow-sm">
+                                <div class="card-header headerBackGround">
+                                    <p class="cardsHeader">訊息編號：@item.Sn</p>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <p class="cardsTitle">招募圖片：</p>
+                                        <img src="@Url.Action("GetRecruitImage","Act")/@item.Sn" class="img-fluid" alt="">
+                                    </li>
+                                    <li class="list-group-item">
+                                        <p class="cardsTitle">招募標題：</p>
+                                        <p class="recruitTitle">@item.Title</p>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <p class="cardsTitle">招募副標題：</p>
+                                        <p class="recruitSubTitle">@item.SubTitle</p>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <p class="cardsTitle">招募內容：</p>
+                                        <p class="recruitContent recruitContent1">
+                                            @item.P1
+                                        </p>
+                                        <p class="recruitContent recruitContent2">
+                                            @item.P2
+                                        </p>
+                                    </li>
+                                </ul>
+                                <div class="card-body">
+                                    <button type="button" class="btn btn-outline-success btnEdit" data-sn="@item.Sn">編輯</button>
+                                    <button type="button" class="btn btn-outline-danger btnDel" data-sn="@item.Sn">刪除</button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+        <!-- lightBox for edit -->
+        <form id="fmEditItem" enctype="multipart/form-data">
+            <div class="lightBoxBlock border">
+                <div class="lightBox border">
+                    <div class="lightBoxContent border">
+                        <div class="lightBoxHeader border">
+                            <p class="mainTitle">編輯招募訊息</p>
+                            <div class="cancel border">
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="lightBoxBody border">
+                            <div class="">
+                                <label for="editTitleImage">招募圖片</label>
+                                <div class="titleImageBlock">
+                                    <div>
+                                        <div class="custom-file fileBlock">
+                                            <input type="file" id="editTitleImage" name="editTitleImage" class="custom-file-input addImage editTitleImage">
+                                            <label class="custom-file-label" for="editTitleImage" aria-describedby="inputGroupFileAddon02">
+                                                編輯圖片
+                                            </label>
+                                        </div>
+                                        <button type="button" class="btn btn-secondary btnBack">原圖</button>
+                                    </div>
+                                </div>
+                                <div class="previewImageBlock titleImage">
+                                    <img class="previewImage" src="#" alt="">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="editRecruitTitle">招募標題</label>
+                                <input type="text" class="form-control editTitle" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="editTitle" name="editTitle" placeholder="必填，50字內" maxlength="50" required>
+                            </div>
+                            <div>
+                                <label for="editRecruitSubTitle">招募副標題</label>
+                                <input type="text" class="form-control editSubTitle" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="editSubTitle" name="editSubTitle" placeholder="選填，50字內" maxlength="50">
+                            </div>
+                            <div>
+                                <label for="editItemContent1">消息內容_段落1</label>
+                                <textarea class="editContent1 form-control" id="editContent1" name="editContent1" placeholder="必填，2000字內" maxlength="2000" required></textarea>
+                            </div>
+                            <div>
+                                <label for="editItemContent2">消息內容_段落2</label>
+                                <textarea class="editContent2 form-control" id="editContent2" name="editContent2" placeholder="選填，2500字內" maxlength="2500"></textarea>
+                            </div>
+                        </div>
+                        <div class="lightBoxFooter border">
+                            <div>
+                                <button type="button" class="btn btn-primary btnSave">儲存</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+
+@section scripts {
+    <script>
+        var getu = "@Url.Action("GetRecruit", "Act")";
+        var edtu = "@Url.Action("EditRecruit", "Act")";
+        var delu = "@Url.Action("DeleteRecruit", "Act")";
+        var ntu = "@Url.Action("GetRecruitImage", "Act")";
+
+        // 代入欲編輯的消息資料
+        $(".btnEdit").click((e) => {
+            var id = e.target.dataset.sn;
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", getu + "/" + id, true);
+            xhr.onload = function () {
+                if (this.status === 200) {
+                    var obj = JSON.parse(this.response);
+                    // 按鈕
+                    $(".btnSave")[0].dataset.sn = id;
+
+                    // 消息主檔
+                    $(".btnBack").data("lnk", ntu + "/" + id);
+                    $(".titleImage img").attr("src", $(".btnBack").data("lnk"));
+                    $(".editTitle").val(obj.Title);
+                    $(".editSubTitle").val(obj.SubTitle);
+                    $(".editContent1").val(obj.P1);
+                    $(".editContent2").val(obj.P2);
+                }
+            };
+            xhr.send();
+        });
+    </script>
+    <script src="~/assets/js/format2.js"></script>
+}

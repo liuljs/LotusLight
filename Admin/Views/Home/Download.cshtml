@@ -1,0 +1,123 @@
+﻿
+@{
+    ViewBag.Title = "檔案下載管理";
+}
+
+<main class="col-md-10">
+    <h2>檔案下載管理</h2>
+    <div class="contactInfoContent">
+        <div class="titleBlock">
+            <h3>檔案設定</h3>
+            <button type="button" class="btn btn-light btnExt" data-toggle="modal"
+                    data-target="#exampleModalCenteredScrollable">
+                新增檔案
+            </button>
+        </div>
+        <!-- Modal -->
+        <form id="fmAddItem" action="@Url.Action("AddDownload", "Act")" method="post" enctype="multipart/form-data">
+            <div class="modal fade" id="exampleModalCenteredScrollable" tabindex="-1"
+                 aria-labelledby="exampleModalCenteredScrollable" aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">新增檔案下載</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body addFormBlock">
+                            <div>
+                                <label for="addContactTitle">檔案名稱</label>
+                                <input type="text" class="form-control addTitle" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="addContactTitle" name="addContactTitle" placeholder="必填，50字內" maxlength="50" required>
+                            </div>
+                            <div>
+                                <label for="addFilesWord">Word檔案</label>
+                                <div class="custom-file">
+                                    <input type="file" id="addFilesWord" name="addFilesWord" class="custom-file-input addFiles1" accept=".doc, .docx">
+                                    <label class="custom-file-label" for="addFilesWord">上傳檔案</label>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="addFilesPDF">PDF檔案</label>
+                                <div class="custom-file">
+                                    <input type="file" id="addFilesPDF" name="addFilesPDF" class="custom-file-input addFiles2" accept=".pdf">
+                                    <label class="custom-file-label" for="addFilesPDF">上傳檔案</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="reset" class="btn btn-secondary btnReset">重填</button>
+                            <button type="submit" class="btn btn-primary btnAdd">新增</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <table class="table contentsBlock commonBlock rwdtable">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col" class="width10">檔案編號</th>
+                    <th scope="col" class="leftBlock">檔案名稱</th>
+                    <th scope="col" class="">Word檔案</th>
+                    <th scope="col" class="">PDF檔案</th>
+                    <th scope="col" class="">檔案設定</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Admin.Models.Download item in (List<Admin.Models.Download>)ViewBag.ObjList)
+                {
+                    <tr>
+                        <td scope="row" data-label="檔案編號">
+                            <div class="numberBlock">@item.Sn</div>
+                        </td>
+                        <td data-label="檔案名稱">
+                            <input type="text" class="form-control editTitle" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="@item.FileName" placeholder="必填，50字內" maxlength="50" required readonly>
+                        </td>
+                        <td data-label="Word檔案">
+                            @if (item.ExistsWord)
+                            {
+                                <a href="@Url.Action($"GetDownloadDoc/{@item.Sn}", "Act")">檔案載點</a>
+                            }
+                        </td>
+                        <td data-label="PDF檔案">
+                            @if (item.ExistsPdf)
+                            {
+                                <a href="@Url.Action($"GetDownloadPdf/{@item.Sn}", "Act")">檔案載點</a>
+                            }
+                        </td>
+                        <td data-label="檔案設定">
+                            <div class="">
+                                <button type="button" class="btn btn-outline-info btnEdit">編輯</button>
+                                <button type="button" class="btn btn-outline-success btnSave" data-sn="@item.Sn" style="display:none;">儲存</button>
+                                <button type="button" class="btn btn-outline-danger btnDel" data-sn="@item.Sn">刪除</button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</main>
+
+@section scripts {
+    <script>
+        var edtu = "@Url.Action("EditDownload", "Act")";
+        var delu = "@Url.Action("DeleteDownload", "Act")";
+
+        function getPostData(e) {
+            var tr = e.target.parentElement.parentElement.parentElement;
+            var postData = new FormData();
+            postData.append('editTitle', $(tr).find('.editTitle').val());
+            return postData;
+        }
+
+        $(".custom-file-input").change((e) => {
+            if (e.target.files.length > 0)
+                $(e.target.parentElement).find("label").text(e.target.files[0].name);
+            else
+                $(e.target.parentElement).find("label").text("上傳檔案");
+        });
+    </script>
+    <script src="~/assets/js/format3.js"></script>
+}

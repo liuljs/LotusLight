@@ -1,0 +1,57 @@
+﻿@model List<LotusLight.Models.News>
+
+@{
+    Layout = null;
+}
+
+<div class="newsContents border pageContents">
+    <ul>
+        @foreach (LotusLight.Models.News item in Model)
+        {
+            <li>
+                <a href="javascript:;" data-url="@Url.Action($"GetNews/{item.Sn}", "Home")" class="news">
+                    <div class="contentPart border">
+                        <div class="newsImage border">
+                            <img src="@Url.Action($"GetNewsImage/{item.Sn}", "Act")" alt="">
+                        </div>
+                    </div>
+                    <div class="contentPart border">
+                        <div class="contentBlock border">
+                            <div class="titleBlock border">
+                                <p class="mainTitle">@item.Title</p>
+                            </div>
+                            <div class="dateBlock">
+                                <p>@item.ArticleDate.ToString("yyyy/MM/dd")</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        }
+    </ul>
+</div>
+<div class="pagination border">
+    <div class="effectz preBlock"></div>
+    <ul></ul>
+    <div class="effectz nextBlock"></div>
+</div>
+
+<script src="~/assets/js/paginations.js"></script>
+<script type="text/javascript">
+    $(".news").click((e) => {
+        let num = e.currentTarget.dataset.url.split("/");
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", e.currentTarget.dataset.url, true);
+        xhr.onload = function () {
+            if (this.status === 200) {
+                nowPage = $(".pagination li.active").text();
+                $(".divEventContent").html(this.responseText);
+            
+                window.history.replaceState({
+                    path: window.location.href + `/N${num[num.length - 1]}`
+                }, '', window.location.href + `/N${num[num.length - 1]}`);
+            }
+        };
+        xhr.send();
+    });
+</script>

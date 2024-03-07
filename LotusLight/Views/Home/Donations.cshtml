@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "善捐名單";
+}
+
+<main class="searchPage border">
+    <!-- bannerBlock -->
+    <div class="bannerBlock border">
+        <div class="banner_09 border">
+            <div class="bannerTitleBlock border">
+                <img src="~/assets/img/elements/titleImage/titleImage_13.png" alt="">
+                <p>Donations</p>
+            </div>
+        </div>
+        <div class="breadCrumbs border">
+            <ul>
+                <li><a href="@Url.Action("Index","Home")">首頁</a></li>
+                <li class="disPlay"><a href="@Url.Action("Donations","Home")">善捐名單</a></li>
+            </ul>
+        </div>
+    </div>
+    <main class="main">
+        <div class="donationsBlock border">
+            <div class="donationstitleBlock border">
+                <p class="mainTile">善捐名單</p>
+            </div>
+            @*<table id="donations" class="nowrap donations" style="width:100%">
+            <thead>
+                <tr>
+                    <th>捐款姓名（公司）</th>
+                <th>地區</th>
+                <th>捐款項目(捐款用途)</th>
+                <th>捐款時間</th>
+                <th class="price">捐款金額</th>
+                <th>捐款項目(捐款用途)search用</th>
+            </tr>
+        </thead>
+        <tbody>*@
+            @*@foreach (LotusLight.Models.Donations item in (List<LotusLight.Models.Donations>)ViewBag.ObjList)
+        {*@
+            @*<tr>
+        <td>@item.Name</td>-->
+        <td>@System.Text.RegularExpressions.Regex.Replace(item.Addr.Substring(0, item.Addr.IndexOfAny(new char[] { '縣', '市' })+1), "[0-9()（）０１２３４５６７８９]+", "")</td>
+        <td>@item.DonateFor</td>
+            <td>@item.PayDate.ToString("yyyy/MM/dd")</td>
+            <td class="price">@item.Amount.ToString("#,###")</td>
+            <td>@item.Name_data</td>
+        </tr>*@
+            @*}*@
+            @*</tbody>
+        </table>*@
+            <!--表單↓通常放置查詢條件-->
+            <!--action在這裡可以不用給，因為發出ajax時就會指派url-->
+            <table id="donations" class="nowrap donations" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>捐款姓名（公司）</th>
+                        <th>捐款項目(捐款用途)</th>
+                        <th>捐款時間</th>
+                        <th class="price">捐款金額</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="Name"></td>
+                        <td id="DonateFor"></td>
+                        <td id="PayDate"></td>
+                        <td id="Amount"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </main>
+</main>

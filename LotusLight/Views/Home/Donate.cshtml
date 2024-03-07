@@ -1,0 +1,181 @@
+﻿
+@{
+    ViewBag.Title = "捐款方式";
+}
+
+<main class="donatePage border">
+    <!-- bannerBlock -->
+    <div class="bannerBlock border">
+        <div class="banner_04 border">
+            <div class="bannerTitleBlock border">
+                <img src="~/assets/img/elements/titleImage/titleImage_04.png" alt="">
+                <p>Donates</p>
+            </div>
+        </div>
+        <div class="breadCrumbs border">
+            <ul>
+                <li><a href="@Url.Action("Index","Home")">首頁</a></li>
+                <li class="disPlay"><a href="@Url.Action("Donate","Home")">捐款方式</a></li>
+            </ul>
+        </div>
+    </div>
+    <main class="main">
+        <div class="donateContentBlock border">
+            <div class="donateTitleBlock border">
+                <p class="mainTitle">
+                    每一塊錢，都能幫助需要的人
+                </p>
+            </div>
+            <div class="donateContents border">
+                <p>因為您的支持，華光功德會得以推動醫療、教育、文化等四大志業及臨終關懷專案，積極展開全面性濟世度眾之重任。華光珍惜您的善念與願力，與您合力轉動這世界善的法輪，讓愛遍灑大地，潤澤所有需要幫助的人。</p>
+                <p>您的每一筆捐款，本會均會開立捐款憑証，可依法列入個人年度所得稅扣除額。</p>
+                <p>另外，本會基於公開公正原則，每一筆捐款之贊助者姓名與金額，都將公佈於本會網站及刊物。若是您不方便公佈，請來電華光辦公室告知，謝謝您的配合。</p>
+            </div>
+            <div class="btnBlock centerBlock">
+                <a href="" class="btnDonate">
+                    <div class="contentPart">
+                        <p>網路捐款</p>
+                    </div>
+                    <div class="contentPart">
+                        <img src="~/assets/img/elements/donateImage.png" alt="">
+                    </div>
+                </a>
+            </div>
+            @Html.Partial("DonateBox")
+        </div>
+        <div class="donateCards border">
+            <div class="cardItem border">
+                <div class="cardHeader border">
+                    <div class="cardImage border">
+                        <img src="~/assets/img/elements/donateImage_01.jpg" alt="">
+                    </div>
+                </div>
+                <div class="cardBody border">
+                    <div class="cardTitleBlock border">
+                        <p class="mainTitle">
+                            國內銀行匯款
+                        </p>
+                    </div>
+                    <ul>
+                        @foreach (LotusLight.Models.Contact item in (List<LotusLight.Models.Contact>)ViewBag.BranchList)
+                        {
+                            if (item.Name.StartsWith("國內捐款"))
+                            {
+                            <li>
+                                <p class="firstTitle">@item.Name.Replace("國內捐款-", "")</p>
+                                <p>戶名：@item.AccountName</p>
+                                <p>銀行：（@item.BankCode）@item.BankName</p>
+                                <p>銀行帳號：@item.AccountNum</p>
+                            </li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="cardItem border">
+                <div class="cardHeader border">
+                    <div class="cardImage border">
+                        <img src="~/assets/img/elements/donateImage_02.jpg" alt="">
+                    </div>
+                </div>
+                <div class="cardBody border">
+                    <div class="cardTitleBlock border">
+                        <p class="mainTitle">
+                            ATM、EATM、網路銀行 轉帳
+                        </p>
+                    </div>
+                    <ul>
+                        @foreach (LotusLight.Models.Contact item in (List<LotusLight.Models.Contact>)ViewBag.BranchList)
+                        {
+                            if (item.Name.StartsWith("國內捐款"))
+                            {
+                            <li>
+                                <p class="firstTitle">@item.Name.Replace("國內捐款-", "")</p>
+                                <p>戶名：@item.AccountName</p>
+                                <p>銀行：（@item.BankCode）@item.BankName</p>
+                                <p>銀行帳號：@item.AccountNum</p>
+                            </li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="cardItem border">
+                <div class="cardHeader border">
+                    <div class="cardImage border">
+                        <img src="~/assets/img/elements/donateImage_03.jpg" alt="">
+                    </div>
+                </div>
+                <div class="cardBody border">
+                    <div class="cardTitleBlock border">
+                        <p class="mainTitle">
+                            郵政劃撥帳號
+                        </p>
+                    </div>
+                    <div class="cardContents">
+                        <p>戶名：社團法人中國真佛宗華光功德會</p>
+                        <p>劃撥帳號：18787167</p>
+                    </div>
+                </div>
+            </div>
+            <div class="cardItem border">
+                <div class="cardHeader border">
+                    <div class="cardImage border">
+                        <img src="~/assets/img/elements/donateImage_04.jpg" alt="">
+                    </div>
+                </div>
+                <div class="cardBody border">
+                    <div class="cardTitleBlock border">
+                        <p class="mainTitle">
+                            捐贈雲端發票
+                        </p>
+                    </div>
+                    <div class="cardContents">
+                        <p>
+                            消費結帳時告知店員，我要捐發票，口述愛心碼「363113」或使用雲端發票APP出示愛心碼
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="donateOverRows border">
+            <div class="rowsHeader border">
+                <img src="~/assets/img/elements/donateImage_05.jpg" alt="">
+            </div>
+            <div class="rowsBody border">
+                <div class="rowsTitleBlock">
+                    <p class="mainTitle">
+                        海外銀行匯款
+                    </p>
+                </div>
+                <ul>
+                    @foreach (LotusLight.Models.Contact item in (List<LotusLight.Models.Contact>)ViewBag.BranchList)
+                    {
+                        if (item.Name.StartsWith("國外捐款"))
+                        {
+                            <li>
+                                <div><p class="firstTitle">@item.Name.Replace("國外捐款-", "")</p></div>
+                                <div>
+                                    <p>Name Of Beneficiary（戶名）：</p>
+                                    <p><span>@item.AccountName</span><span>@item.AccountNameEng</span></p>
+                                </div>
+                                <div>
+                                    <p>Address（地址）：</p>
+                                    <p><span>@item.Address</span><span>@item.AddressEng</span></p>
+                                </div>
+                                <div>
+                                    <p>SWIFT CODE（銀行代碼）：</p>
+                                    <p><span>@item.BankCode</span></p>
+                                </div>
+                                <div><p>Bank Name（銀行名稱）：</p>
+                                    <p><span>@item.BankName</span><span>@item.BankNameEng</span></p>
+                                </div>
+                                <div><p><span>Beneficiary Account No.（帳號）：</span><span>@item.AccountNum</span></p></div>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </main>
+</main>

@@ -1,0 +1,113 @@
+﻿
+@{
+    ViewBag.Title = "友善連結";
+}
+
+<main class="col-md-10">
+    <h2>友善連結</h2>
+    <div class="contactInfoContent">
+        <div class="titleBlock">
+            <h3>連結設定</h3>
+            <button type="button" class="btn btn-light btnExt" data-toggle="modal"
+                    data-target="#exampleModalCenteredScrollable">
+                新增連結
+            </button>
+        </div>
+        <!-- Modal -->
+        <form id="fmAddItem" action="@Url.Action("AddFavouriteLink", "Act")" method="post" enctype="multipart/form-data">
+            <div class="modal fade" id="exampleModalCenteredScrollable" tabindex="-1"
+                 aria-labelledby="exampleModalCenteredScrollable" aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">新增友善連結</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body addFormBlock">
+                            <div>
+                                <label for="addContactTitle">連結名稱</label>
+                                <input type="text" class="form-control addTitle" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="addContactTitle" name="addContactTitle" placeholder="必填，50字內" maxlength="50" required>
+                            </div>
+                            <div>
+                                <label for="addContactFBLink">連結網址</label>
+                                <input type="text" class="form-control addFriendlyLink" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="addFriendlyLink" name="addFriendlyLink" placeholder="必填，250字內" maxlength="250" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="reset" class="btn btn-secondary btnReset">重填</button>
+                            <button type="submit" class="btn btn-primary btnAdd">新增</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <table class="table contentsBlock commonBlock rwdtable pageControllers">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col" class="width10">連結編號</th>
+                    <th scope="col" class="width20 leftBlock">連結名稱</th>
+                    <th scope="col" class="leftBlock">連結網址</th>
+                    <th scope="col" class="width8">連結排序</th>
+                    <th scope="col" class="">連結設定</th>
+                </tr>
+            </thead>
+            <tbody class="pageContents">
+                @foreach (Admin.Models.FavouriteLink item in (List<Admin.Models.FavouriteLink>)ViewBag.ObjList)
+                {
+                    <tr>
+                        <td scope="row" data-label="連結編號">
+                            <div class="numberBlock">@item.Sn</div>
+                        </td>
+                        <td data-label="連結名稱">
+                            <input type="text" class="form-control editTitle" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="@item.Name" placeholder="必填，50字內" maxlength="50" required readonly>
+                        </td>
+                        <td class="leftBlock" data-label="連結網址">
+                            <input type="text" class="form-control editLinkURL" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="@item.Link" placeholder="必填，250字內" maxlength="250" required readonly>
+                        </td>
+                        <td data-label="連結排序">
+                            <input type="text" class="form-control editSort" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="@item.Sort" placeholder="必填，請輸入半型數字，預設0" required readonly>
+                        </td>
+                        <td data-label="資訊設定">
+                            <div class="">
+                                <button type="button" class="btn btn-outline-info btnEdit">編輯</button>
+                                <button type="button" class="btn btn-outline-success btnSave" data-sn="@item.Sn" style="display:none;">儲存</button>
+                                <button type="button" class="btn btn-outline-danger btnDel" data-sn="@item.Sn">刪除</button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5">
+                        <div class="paginationz">
+                            <div class="effectz preBlock"></div>
+                            <ul></ul>
+                            <div class="effectz nextBlock"></div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</main>
+
+@section scripts {
+    <script>
+        var edtu = "@Url.Action("EditFavouriteLink", "Act")";
+        var delu = "@Url.Action("DeleteFavouriteLink", "Act")";
+
+        function getPostData(e) {
+            var tr = e.target.parentElement.parentElement.parentElement;
+            var postData = new FormData();
+            postData.append('editTitle', $(tr).find('.editTitle').val());
+            postData.append('editLinkURL', $(tr).find('.editLinkURL').val());
+            postData.append('editSort', $(tr).find('.editSort').val());
+            return postData;
+        }
+    </script>
+    <script src="~/assets/js/format3.js"></script>
+}

@@ -1,0 +1,222 @@
+﻿
+@{
+    ViewBag.Title = "名單管理";
+}
+
+<main class="col-md-10">
+    <div class="contentTitleBlock">
+        <h2>名單管理</h2>
+        <div class="custom-file">
+            <input type="file" id="addMemFiles" class="custom-file-input addMemFiles" accept=".csv">
+            <label class="custom-file-label" for="addMemFiles">批次匯入會員資料</label>
+        </div>
+        <div>
+            <a href="~/Mime/Example/member.csv" class="btn btn-info" style="margin-left:10px;">範例檔</a>
+            <button type="button" class="btn btn-secondary btn-xls-help" style="margin-left:10px;">Excel編輯說明</button>
+        </div>
+    </div>
+    <div class="contactInfoContent">
+        <div class="titleBlock">
+            <h3>名單設定</h3>
+            <button type="button" class="btn btn-light btnExt" data-toggle="modal"
+                    data-target="#exampleModalCenteredScrollable">
+                新增會員
+            </button>
+        </div>
+        <!-- Modal -->
+        <form id="fmAddItem" enctype="multipart/form-data">
+            <div class="modal fade" id="exampleModalCenteredScrollable" tabindex="-1"
+                 aria-labelledby="exampleModalCenteredScrollable" aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">新增會員</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body addFormBlock">
+                            <div>
+                                <label for="addContactTitle">會員編號</label>
+                                <input type="text" class="form-control addMemNum" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="addMemNum" name="addMemNum" placeholder="必填，10字內" maxlength="10" required>
+                            </div>
+                            <div>
+                                <label for="addContactTitle">會員名稱</label>
+                                <input type="text" class="form-control addTitle" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="addTitle" name="addTitle" placeholder="必填，50字內" maxlength="50" required>
+                            </div>
+                            <div>
+                                <label for="addMemAreas">地區</label>
+                                <div class="input-group mb-3">
+                                    <select class="custom-select addArea" id="addArea" name="addArea">
+                                        @foreach (Admin.Models.Area a in (List<Admin.Models.Area>)ViewBag.AreaList)
+                                        {
+                                            <option value="@a.Id">@a.Name</option>
+                                        }
+                                    </select>
+                                    <div class="input-group-append">
+                                        <label class="input-group-text" for="inputGroupSelect02">選擇地區</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="reset" class="btn btn-secondary btnReset">重填</button>
+                            <button type="button" class="btn btn-primary btnAdd">新增</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <table class="table contentsBlock commonBlock rwdtable pageControllers">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col" class="width10">會員編號</th>
+                    <th scope="col" class="leftBlock">會員名稱</th>
+                    <th scope="col" class="width10">地區</th>
+                    <th scope="col" class="">會員設定</th>
+                </tr>
+            </thead>
+            <tbody class="pageContents">
+                @foreach (Admin.Models.Member item in (List<Admin.Models.Member>)ViewBag.ObjList)
+                {
+                    <tr>
+                        <td scope="row" data-label="會員編號">
+                            <div class="numberBlock">
+                                @item.Id
+                            </div>
+                        </td>
+                        <td data-label="會員名稱">
+                            <input type="text" class="form-control editTitle" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="@item.Name" placeholder="必填，50字內" maxlength="50" required readonly>
+                        </td>
+                        <td data-label="地區">
+                            <select class="custom-select editArea" id="editArea" name="editArea" required disabled>
+                                @foreach (Admin.Models.Area a in (List<Admin.Models.Area>)ViewBag.AreaList)
+                                {
+                                    if (a.Id == item.AreaId)
+                                    {
+                                        <option value="@a.Id" selected>@a.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@a.Id">@a.Name</option>
+                                    }
+                                }
+                            </select>
+                        </td>
+                        <td data-label="會員設定">
+                            <div class="">
+                                <button type="button" class="btn btn-outline-info btnEdit">編輯</button>
+                                <button type="button" class="btn btn-outline-success btnSave" data-sn="@item.Id" style="display:none;">儲存</button>
+                                <button type="button" class="btn btn-outline-danger btnDel" data-sn="@item.Id">刪除</button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5">
+                        <div class="paginationz">
+                            <div class="effectz preBlock"></div>
+                            <ul></ul>
+                            <div class="effectz nextBlock"></div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</main>
+
+@section scripts {
+    <script>
+        var addu = "@Url.Action("AddMember", "Act")";
+        var edtu = "@Url.Action("EditMember", "Act")";
+        var delu = "@Url.Action("DeleteMember", "Act")";
+        var impu = "@Url.Action("ImportMember", "Act")";
+
+        $(".btn-xls-help").click(() => {
+            Swal.fire({
+                title: '操作說明',
+                type: 'info',
+                html: `<p style="text-align:left;">因會員編號為0開頭，為了避免Excel公式自動去除0，使用Excel編輯的用戶請依以下步驟來開啟、存檔範例檔。</p>
+                <p style="text-align:left;color:red;">※非使用Excel編輯的用戶可依自己方式編輯範例擋。</p>
+                <br /><p style="font-weight:800;">步驟一：匯入</p>
+                <p><img src="${window.location.origin}/LotusLightAdmin/Document/Member/1.png" width="100%" /></p>
+                <br /><p style="font-weight:800;">步驟二：匯入</p>
+                <p><img src="${window.location.origin}/LotusLightAdmin/Document/Member/2.png" width="100%" /></p>
+                <br /><p style="font-weight:800;">步驟三：匯入</p>
+                <p><img src="${window.location.origin}/LotusLightAdmin/Document/Member/3.png" width="100%" /></p>
+                <br /><p style="font-weight:800;">步驟四：匯入</p>
+                <p><img src="${window.location.origin}/LotusLightAdmin/Document/Member/4.png" width="100%" /></p>
+                <br /><p style="font-weight:800;">步驟五：匯入</p>
+                <p><img src="${window.location.origin}/LotusLightAdmin/Document/Member/4.1.png" width="100%" /></p>
+                <br /><p style="font-weight:800;">步驟六：編輯</p>
+                <p><img src="${window.location.origin}/LotusLightAdmin/Document/Member/5.png" width="100%" /></p>
+                <br /><p style="font-weight:800;">步驟七：存檔</p>
+                <p><img src="${window.location.origin}/LotusLightAdmin/Document/Member/6.png" width="100%" /></p>
+                <br /><p style="font-weight:800;">步驟八：存檔</p>
+                <p><img src="${window.location.origin}/LotusLightAdmin/Document/Member/6.1.png" width="100%" /></p>
+                <br /><p style="font-weight:800;">步驟九：存檔</p>
+                <p><img src="${window.location.origin}/LotusLightAdmin/Document/Member/7.png" width="100%" /></p>
+    `
+            });
+        })
+        
+        $(".addMemFiles").change((e) => {
+            if (e.target.files.length > 0) {
+                var postData = new FormData();
+                postData.append(e.target.files[0].name, e.target.files[0]);
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", impu, true);
+                xhr.onload = function () {
+                    if (this.status === 200 && this.responseText === "OK") {
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: '操作成功',
+                            showConfirmButton: false,
+                            timer: 1000
+                        }).then(() => {
+                            window.location.href = window.location.href;
+                        });
+                    } else if (this.status === 200 && this.responseText.indexOf("NG") > -1) {
+                        var msg = this.responseText.split(';');
+                        Swal.fire(msg.length > 1 ? msg[1] : "操作失敗");
+                    }
+                };
+                xhr.send(postData);
+                $(".addMemFiles").val('');
+            }
+        })
+
+        $(".btnAdd").click(() => {
+            if ($("#fmAddItem")[0].checkValidity()) {
+                var postData = new FormData($("#fmAddItem")[0]);
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", addu, true);
+                xhr.onload = function () {
+                    if (this.status === 200 && this.responseText === "OK") {
+                        window.location.href = window.location.href;
+                    } else if (this.status === 200 && this.responseText.indexOf("NG") > -1) {
+                        var msg = this.responseText.split(';');
+                        Swal.fire(msg.length > 1 ? msg[1] : "操作失敗");
+                    }
+                };
+                xhr.send(postData);
+            } else {
+                Swal.fire('請填寫所有欄位！');
+            }
+        });
+
+        function getPostData(e) {
+            var tr = e.target.parentElement.parentElement.parentElement;
+            var postData = new FormData();
+            postData.append('editTitle', $(tr).find('.editTitle').val());
+            postData.append('editArea', $(tr).find('.editArea option:selected').val());
+            return postData;
+        }
+    </script>
+    <script src="~/assets/js/format3.js"></script>
+}

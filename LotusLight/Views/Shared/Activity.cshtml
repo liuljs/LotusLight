@@ -1,0 +1,77 @@
+﻿@model List<LotusLight.Models.Activity>
+
+@{
+    Layout = null;
+}
+
+<div class="activityContents border pageContents">
+    <ul>
+        @foreach (LotusLight.Models.Activity item in Model)
+        {
+            <li>
+                <a href="javascript:;" data-url="@Url.Action($"GetActivity/{item.Sn}", "Home")" class="cardItem border activity">
+                    <div class="cardHeader">
+                        <div class="cardImage">
+                            <img src="@Url.Action($"GetActivityImage/{item.Sn}", "Act")" alt="">
+                        </div>
+                    </div>
+                    <div class="cardBody">
+                        <div class="cardTitle">
+                            <p class="mainTitle">@item.Title</p>
+                        </div>
+                    </div>
+                    <div class="cardFooter">
+                        <div class="dateBlock">
+                            <p>@item.ArticleDate.ToString("yyyy/MM/dd")</p>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        }
+    </ul>
+    @*@foreach (LotusLight.Models.Activity item in Model)
+        {
+            <a href="javascript:;" data-url="@Url.Action($"GetActivity/{item.Sn}", "Home")" class="cardItem border activity">
+                <div class="cardHeader">
+                    <div class="cardImage">
+                        <img src="@Url.Action($"GetActivityImage/{item.Sn}", "Act")" alt="">
+                    </div>
+                </div>
+                <div class="cardBody">
+                    <div class="cardTitle">
+                        <p class="mainTitle">@item.Title</p>
+                    </div>
+                </div>
+                <div class="cardFooter">
+                    <div class="dateBlock">
+                        <p>@item.ArticleDate.ToString("yyyy/MM/dd")</p>
+                    </div>
+                </div>
+            </a>
+        }*@
+</div>
+<div class="pagination border">
+    <div class="effectz preBlock"></div>
+    <ul></ul>
+    <div class="effectz nextBlock"></div>
+</div>
+
+<script src="~/assets/js/paginations.js"></script>
+<script type="text/javascript">
+    $(".activity").click((e) => {
+        let num = e.currentTarget.dataset.url.split("/");
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", e.currentTarget.dataset.url, true);
+        xhr.onload = function () {
+            if (this.status === 200) {
+                nowPage = $(".pagination li.active").text();
+                $(".divEventContent").html(this.responseText);
+
+                window.history.replaceState({
+                    path: window.location.href + `/A${num[num.length - 1]}`
+                }, '', window.location.href + `/A${num[num.length - 1]}`);
+            }
+        };
+        xhr.send();
+    });
+</script>

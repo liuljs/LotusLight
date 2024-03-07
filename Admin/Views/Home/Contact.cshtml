@@ -1,0 +1,396 @@
+﻿
+@{
+    ViewBag.Title = "聯絡資訊管理";
+}
+
+<main class="col-md-10">
+    <h2>聯絡資訊管理</h2>
+    <div class="recruitsContent">
+        <div class="titleBlock">
+            <h3>資訊設定</h3>
+            <button type="button" class="btn btn-light btnExt" data-toggle="modal"
+                    data-target="#exampleModalCenteredScrollable">
+                新增資訊
+            </button>
+            <button type="button" class="btn btn-secondary btn-googlemap-help" style="margin-left: 10px; padding: 5px 20px;">
+                Google嵌入式地圖說明
+            </button>
+        </div>
+        <!-- Modal -->
+        <form id="fmAddItem" action="@Url.Action("AddContact", "Act")" method="post" enctype="multipart/form-data">
+            <div class="modal fade" id="exampleModalCenteredScrollable" tabindex="-1"
+                 aria-labelledby="exampleModalCenteredScrollable" aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">新增聯絡資訊</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body addFormBlock">
+                            <div>
+                                <label for="addContactTitle">聯絡名稱</label>
+                                <input type="text" class="form-control addTitle" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="addContactTitle" name="addContactTitle" placeholder="必填，50字內" maxlength="50" required>
+                            </div>
+                            <div>
+                                <label for="addContactAddress">聯絡地址</label>
+                                <input type="text" class="form-control addAddress" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="addContactAddress" name="addContactAddress" placeholder="必填，250字內" maxlength="250" required>
+                            </div>
+                            <div>
+                                <label for="addContactAddressEng">聯絡地址（英文）</label>
+                                <input type="text" class="form-control addAddressEng" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="addContactAddressEng" placeholder="必填，450字內" maxlength="450" required>
+                                <input type="hidden" name="addContactAddressEng" value="">
+                            </div>
+                            <div>
+                                <label for="addMail">聯絡信箱</label>
+                                <input type="text" class="form-control addMail" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="addMail" name="addMail" placeholder="選填，250字內" maxlength="250">
+                            </div>
+                            <div>
+                                <label for="addContactTel">聯絡電話</label>
+                                <input type="text" class="form-control addTel" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="addContactTel" name="addContactTel" placeholder="必填，50字內" maxlength="50" required>
+                            </div>
+                            <div>
+                                <label for="addContactFax">傳真號碼</label>
+                                <input type="text" class="form-control addFax" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="addContactFax" name="addContactFax" placeholder="選填，50字內" maxlength="50">
+                            </div>
+                            <div>
+                                <label for="addContactFBLink">FB 粉絲團</label>
+                                <input type="text" class="form-control addFBLink" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="addContactFBLink" name="addContactFBLink" placeholder="選填，250字內" maxlength="250">
+                            </div>
+                            <div>
+                                <label for="addMerchantId">商店代號</label>
+                                <input type="text" class="form-control addMerchantId" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="addMerchantId" name="addMerchantId" placeholder="必填，9個字" maxlength="9" required>
+                            </div>
+                            <div>
+                                <label for="addTerminalId">端末機代號</label>
+                                <input type="text" class="form-control addTerminalId" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="addTerminalId" name="addTerminalId" placeholder="必填，9個字" maxlength="9" required>
+                            </div>
+                            <div>
+                                <label for="addTerminalId">Google嵌入式地圖</label>
+                                <input type="text" class="form-control addGoogleMap" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="addGoogleMap" placeholder="選填，800字內" maxlength="800">
+                                <input type="hidden" name="addGoogleMap" value="">
+                            </div>
+
+                            <div>
+                                <label for="addBankCode">銀行代碼</label>
+                                <input type="text" class="form-control addBankCode" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="addBankCode" name="addBankCode" placeholder="選填，15字內" maxlength="15">
+                            </div>
+                            <div>
+                                <label for="addBankName">銀行名稱</label>
+                                <input type="text" class="form-control addBankName" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="addBankName" name="addBankName" placeholder="選填，50字內" maxlength="50">
+                            </div>
+                            <div>
+                                <label for="addBankNameEng">銀行名稱（英文）</label>
+                                <input type="text" class="form-control addBankNameEng" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="addBankNameEng" placeholder="選填，250字內" maxlength="250">
+                                <input type="hidden" name="addBankNameEng" value="">
+                            </div>
+                            <div>
+                                <label for="addAccountName">戶名</label>
+                                <input type="text" class="form-control addAccountName" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="addAccountName" name="addAccountName" placeholder="選填，50字內" maxlength="50">
+                            </div>
+                            <div>
+                                <label for="addAccountNameEng">戶名（英文）</label>
+                                <input type="text" class="form-control addAccountNameEng" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="addAccountNameEng" placeholder="選填，250字內" maxlength="250">
+                                <input type="hidden" name="addAccountNameEng" value="">
+                            </div>
+                            <div>
+                                <label for="addAccountNum">帳號</label>
+                                <input type="text" class="form-control addAccountNum" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="addAccountNum" name="addAccountNum" placeholder="選填，50字內" maxlength="50">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="reset" class="btn btn-secondary btnReset">重填</button>
+                            <button type="submit" class="btn btn-primary btnAdd">新增</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="contentsBlock">
+            <div class="container">
+                <div class="row">
+
+                    @foreach (Admin.Models.Contact item in (List<Admin.Models.Contact>)ViewBag.ObjList)
+                    {
+                        <div class="col-md-6 cards">
+                            <div class="card mb-4 shadow-sm">
+                                <div class="card-header headerBackGround">
+                                    <p class="cardsHeader">編號：@item.Sn</p>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <p class="cardsTitle">聯絡名稱：</p>
+                                        <p>@item.Name</p>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <p class="cardsTitle">聯絡地址：</p>
+                                        <p>@item.Address</p>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <p class="cardsTitle">聯絡地址（英文）：</p>
+                                        <p>@item.AddressEng</p>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <p class="cardsTitle">聯絡信箱：</p>
+                                        <p>@item.Mail</p>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <p class="cardsTitle">聯絡電話：</p>
+                                        <p>@item.Tel</p>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <p class="cardsTitle">傳真號碼：</p>
+                                        <p>@item.Fax</p>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <p class="cardsTitle">FB 紛絲團：</p>
+                                        <p>@item.FbLink</p>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <p class="cardsTitle">商店代號：</p>
+                                        <p>@item.MerchantId</p>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <p class="cardsTitle">端末機代號：</p>
+                                        <p>@item.TerminalId</p>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <p class="cardsTitle">Google嵌入式地圖：</p>
+                                        <p>@item.GoogleMap</p>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <p class="cardsTitle">銀行代碼：</p>
+                                        <p>@item.BankCode</p>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <p class="cardsTitle">銀行名稱：</p>
+                                        <p>@item.BankName</p>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <p class="cardsTitle">銀行名稱（英文）：</p>
+                                        <p>@item.BankNameEng</p>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <p class="cardsTitle">戶名：</p>
+                                        <p>@item.AccountName</p>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <p class="cardsTitle">戶名（英文）：</p>
+                                        <p>@item.AccountNameEng</p>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <p class="cardsTitle">帳號：</p>
+                                        <p>@item.AccountNum</p>
+                                    </li>
+                                </ul>
+                                <div class="card-body">
+                                    <button type="button" class="btn btn-outline-success btnEdit" data-sn="@item.Sn">編輯</button>
+                                    <button type="button" class="btn btn-outline-danger btnDel" data-sn="@item.Sn">刪除</button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+        <!-- lightBox for edit -->
+        <form id="fmEditItem" enctype="multipart/form-data">
+            <div class="lightBoxBlock border">
+                <div class="lightBox border">
+                    <div class="lightBoxContent border">
+                        <div class="lightBoxHeader border">
+                            <p class="mainTitle">編輯聯絡資訊</p>
+                            <div class="cancel border">
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="lightBoxBody border">
+                            <div>
+                                <label for="editTitle">聯絡名稱</label>
+                                <input type="text" class="form-control editTitle" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="editTitle" name="editTitle" placeholder="必填，50字內" maxlength="50" required>
+                            </div>
+                            <div>
+                                <label for="editAddress">聯絡地址</label>
+                                <input type="text" class="form-control editAddress" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="editAddress" name="editAddress" placeholder="選填，250字內" maxlength="250">
+                            </div>
+                            <div>
+                                <label for="editAddressEng">聯絡地址（英文）</label>
+                                <input type="text" class="form-control editAddressEng" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="editAddressEng" placeholder="選填，450字內" maxlength="450">
+                                <input type="hidden" name="editAddressEng" value="">
+                            </div>
+                            <div>
+                                <label for="editMail">聯絡信箱</label>
+                                <input type="text" class="form-control editMail" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="editMail" name="editMail" placeholder="選填，250字內" maxlength="250">
+                            </div>
+                            <div>
+                                <label for="editTel">連絡電話</label>
+                                <input type="text" class="form-control editTel" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="editTel" name="editTel" placeholder="必填，50字內" maxlength="50" required>
+                            </div>
+                            <div>
+                                <label for="editFax">傳真號碼</label>
+                                <input type="text" class="form-control editFax" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="editFax" name="editFax" placeholder="選填，50字內" maxlength="50">
+                            </div><div>
+                                <label for="editFBLink">FB 粉絲團</label>
+                                <input type="text" class="form-control editFBLink" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="editFBLink" name="editFBLink" placeholder="必填，50字內" maxlength="50" required>
+                            </div>
+                            <div>
+                                <label for="editMerchantId">商店代號</label>
+                                <input type="text" class="form-control editMerchantId" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="editMerchantId" name="editMerchantId" placeholder="選填，50字內" maxlength="50">
+                            </div><div>
+                                <label for="editTerminalId">端末機代號</label>
+                                <input type="text" class="form-control editTerminalId" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="editTerminalId" name="editTerminalId" placeholder="必填，50字內" maxlength="50" required>
+                            </div>
+                            <div>
+                                <label for="editGoogleMap">Google嵌入式地圖</label>
+                                <input type="text" class="form-control editGoogleMap" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="editGoogleMap" placeholder="選填，800字內" maxlength="800">
+                                <input type="hidden" name="editGoogleMap" value="">
+                            </div>
+                            <div>
+                                <label for="editBankCode">銀行代碼</label>
+                                <input type="text" class="form-control editBankCode" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="editBankCode" name="editBankCode" placeholder="選填，15字內" maxlength="15">
+                            </div>
+                            <div>
+                                <label for="editBankName">銀行名稱</label>
+                                <input type="text" class="form-control editBankName" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="editBankName" name="editBankName" placeholder="選填，50字內" maxlength="50">
+                            </div>
+                            <div>
+                                <label for="editBankNameEng">銀行名稱（英文）</label>
+                                <input type="text" class="form-control editBankNameEng" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="editBankNameEng" placeholder="選填，250字內" maxlength="250">
+                                <input type="hidden" name="editBankNameEng" value="">
+                            </div>
+                            <div>
+                                <label for="editAccountName">戶名</label>
+                                <input type="text" class="form-control editAccountName" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="editAccountName" name="editAccountName" placeholder="選填，50字內" maxlength="50">
+                            </div>
+                            <div>
+                                <label for="editAccountNameEng">戶名（英文）</label>
+                                <input type="text" class="form-control editAccountNameEng" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="editAccountNameEng" placeholder="選填，250字內" maxlength="250">
+                                <input type="hidden" name="editAccountNameEng" value="">
+                            </div>
+                            <div>
+                                <label for="editAccountNum">帳號</label>
+                                <input type="text" class="form-control editAccountNum" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="editAccountNum" name="editAccountNum" placeholder="選填，50字內" maxlength="50">
+                            </div>
+                        </div>
+                        <div class="lightBoxFooter border">
+                            <div>
+                                <button type="button" class="btn btn-primary btnSave">儲存</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+
+@section scripts {
+    <script>
+        // Google嵌入式地圖說明
+        $(".btn-googlemap-help").click(() => {
+            Swal.fire({
+                title: '操作說明',
+                type: 'info',
+                html: `<p style="text-align:left;">請直接複製Google Map的整段嵌入式語法，步驟如下：</p>
+                <br /><p style="font-weight:800;">步驟一：查詢地址，按分享</p>
+                <p><img src="${window.location.origin}/LotusLightAdmin/Document/Contact/1.png" width="100%" /></p>
+                <br /><p style="font-weight:800;">步驟二：切到『嵌入地圖』，按複製HTML</p>
+                <p><img src="${window.location.origin}/LotusLightAdmin/Document/Contact/2.png" width="100%" /></p>
+    `
+            });
+        });
+
+        var getu = "@Url.Action("GetContact", "Act")";
+        var edtu = "@Url.Action("EditContact", "Act")";
+        var delu = "@Url.Action("DeleteContact", "Act")";
+
+        $(".addGoogleMap").change((e) => {
+            $("input[name=addGoogleMap]").val(btoa(e.target.value));
+        });
+        $(".addAddressEng").change((e) => {
+            $("input[name=addAddressEng]").val(btoa(e.target.value));
+        });
+        $(".addBankNameEng").change((e) => {
+            $("input[name=addBankNameEng]").val(btoa(e.target.value));
+        });
+        $(".addAccountNameEng").change((e) => {
+            $("input[name=addAccountNameEng]").val(btoa(e.target.value));
+        });
+        $(".editGoogleMap").change((e) => {
+            $("input[name=editGoogleMap]").val(btoa(e.target.value));
+        });
+        $(".editAddressEng").change((e) => {
+            $("input[name=editAddressEng]").val(btoa(e.target.value));
+        });
+        $(".editBankNameEng").change((e) => {
+            $("input[name=editBankNameEng]").val(btoa(e.target.value));
+        });
+        $(".editAccountNameEng").change((e) => {
+            $("input[name=editAccountNameEng]").val(btoa(e.target.value));
+        });
+
+        // 代入欲編輯的消息資料
+        $(".btnEdit").click((e) => {
+
+            document.getElementById('fmEditItem').reset();
+
+            var id = e.target.dataset.sn;
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", getu + "/" + id, true);
+            xhr.onload = function () {
+                if (this.status === 200) {
+                    var obj = JSON.parse(this.response);
+                    // 按鈕
+                    $(".btnSave")[0].dataset.sn = id;
+
+                    // 消息主檔
+                    $(".editTitle").val(obj.Name);
+
+                    $(".editAddress").val(obj.Address);
+                    $(".editAddressEng").val(obj.AddressEng);
+                    $("input[name=editAddressEng]").val(btoa(obj.AddressEng));
+
+                    $(".editTel").val(obj.Tel);
+                    $(".editFax").val(obj.Fax);
+                    $(".editFBLink").val(obj.FbLink);
+                    $(".editMerchantId").val(obj.MerchantId);
+                    $(".editTerminalId").val(obj.TerminalId);
+
+                    $(".editGoogleMap").val(obj.GoogleMap);
+                    $("input[name=editGoogleMap]").val(btoa(obj.GoogleMap));
+
+                    $(".editBankCode").val(obj.BankCode);
+
+                    $(".editBankName").val(obj.BankName);
+                    $(".editBankNameEng").val(obj.BankNameEng);
+                    $("input[name=editBankNameEng]").val(btoa(obj.BankNameEng));
+
+                    $(".editAccountName").val(obj.AccountName);
+                    $(".editAccountNameEng").val(obj.AccountNameEng);
+                    $("input[name=editAccountNameEng]").val(btoa(obj.AccountNameEng));
+
+                    $(".editAccountNum").val(obj.AccountNum);
+                }
+            };
+            xhr.send();
+        });
+
+        /*function getPostData(e) {
+            var tr = e.target.parentElement.parentElement.parentElement;
+            var postData = new FormData();
+            postData.append('editTitle', $(tr).find('.editTitle').val());
+            postData.append('editAddress', $(tr).find('.editAddress').val());
+            postData.append('editTel', $(tr).find('.editTel').val());
+            postData.append('editFax', $(tr).find('.editFax').val());
+            postData.append('editFBLink', $(tr).find('.editFBLink').val());
+            postData.append('editMerchantId', $(tr).find('.editMerchantId').val());
+            postData.append('editTerminalId', $(tr).find('.editTerminalId').val());
+            postData.append('editGoogleMap', btoa($(tr).find('.editGoogleMap').val()));
+            return postData;
+        }*/
+    </script>
+    <script src="~/assets/js/format2.js"></script>
+}

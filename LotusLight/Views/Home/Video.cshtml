@@ -1,0 +1,80 @@
+﻿
+@{
+    ViewBag.Title = "影音專區";
+}
+
+<main class="videoPage border">
+    <!-- bannerBlock -->
+    <div class="bannerBlock border">
+        <div class="banner_07 border">
+            <div class="bannerTitleBlock border">
+                <img src="~/assets/img/elements/titleImage/titleImage_07.png" alt="">
+                <p>Videos</p>
+            </div>
+        </div>
+        <div class="breadCrumbs border">
+            <ul>
+                <li><a href="@Url.Action("Index","Home")">首頁</a></li>
+                <li class="disPlay"><a href="@Url.Action("Video","Home")">華光招募</a></li>
+            </ul>
+        </div>
+    </div>
+    <main class="main">
+        <div class="videoTitleBlock border">
+            <p class="mainTitle">影音專區</p>
+        </div>
+        <div class="videoTabsBlock border">
+            <ul class="videoTabs border">
+                @foreach (LotusLight.Models.VideoType item in (List<LotusLight.Models.VideoType>)ViewBag.ObjList)
+                {
+                    <li class="tabItem border videoType" data-url="@Url.Action($"VideoContent/{item.Sn}", "Home")">@item.Name</li>
+                }
+            </ul>
+        </div>
+        <div class="tabsContentsBlock border">
+            <div class="tabContent">
+                <div class="videosContents border">
+                    <div class="videoPlayBlock border">
+                        <div class="videoPlays border">
+                            @*<iframe width="560" height="315" src="#" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="">
+                            </iframe>*@
+                        </div>
+                        <div class="videoPlaysTitleBlock">
+                            <p class="mainTitle"></p>
+                        </div>
+                        <div class="btnShowFull">
+                            <p>點擊 顯示<span class="dividerBlock"></span>隱藏 完整內容</p>
+                        </div>
+                        <div class="videoPlaysContents border">
+                        </div>
+                    </div>
+                    <div class="videoPendingList border">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</main>
+
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(() => {
+           $(".videoType:first-child").click();
+        });
+        $(".videoType").click((e) => {
+            $(".videoType").removeClass("active");
+            $(e.currentTarget).addClass("active");
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", e.currentTarget.dataset.url, true);
+            xhr.onload = function () {
+                if (this.status === 200) {
+                    $(".videoPendingList").html(this.responseText);
+                    //$(".videoPendingList li:first-child").click();
+                    $(".videoPlays").html($(".videoPendingList li:first-child .hiddenBlock").text());
+                }
+            };
+            xhr.send();
+        });
+    </script>
+}

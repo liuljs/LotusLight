@@ -1,0 +1,769 @@
+﻿
+@{
+    ViewBag.Title = "捐款紀錄";
+}
+
+<main class="col-md-10">
+    <div class="contentTitleBlock">
+        <h2>捐款紀錄</h2>
+        @*<div class="custom-file">
+            <input type="file" id="addMemFiles" class="custom-file-input addMemFiles" accept=".csv">
+            <label class="custom-file-label" for="addMemFiles">批次匯入捐款資料</label>
+        </div>
+        <div>
+            <a href="~/Mime/Example/record.csv" class="btn btn-info" style="margin-left:10px;">範例檔</a>
+            <button type="button" class="btn btn-secondary btn-xls-help" style="margin-left:10px;">Excel編輯說明</button>
+        </div>*@
+        <div class="text-danger">
+            *前台查詢只會顯示Excel匯入的結果，不會顯示實際的金流交易紀錄。
+        </div>
+        <div class="custom-file">
+                <input type="file" id="addActivityImage" class="custom-file-input addMemFiles" accept=".xls">
+                <label class="custom-file-label" for="addMemFiles">批次匯入捐款資料</label>
+            </div>
+        <div>
+            <a href="~/Mime/Example/donaterecord.xls" class="btn btn-info" style="margin-left:10px;">範例檔</a>
+            <button type="button" class="btn btn-secondary btn-xls-help" style="margin-left:10px;">Excel編輯說明</button>
+        </div>
+    </div>
+    <div class="donateContent">
+        <div class="titleBlock">
+            <h3>捐款設定</h3>
+            <button type="button" class="btn btn-light btnExt" data-toggle="modal" data-target="#exampleModalCenteredScrollable">新增紀錄</button>
+        </div>
+        @*<div class="searchBlock">
+                <div class="contentPart features">
+                    <button type="button" class="btn btn-outline-dark btnCancelAll">取消選取</button>
+                    <button type="button" class="btn btn-outline-danger btnDelAll">刪除</button>
+                </div>
+                <div class="contentPart">
+                    <div class="filters">
+                        <label for="dataFilter">捐款篩選設定</label>
+                        <div class="input-group">
+                            <select class="custom-select" id="inputGroupSelect04"
+                                    aria-label="Example select with button addon">
+                                <option selected value="0">篩選方式</option>
+                                <optgroup label="捐款來源" data-gp="1">
+                                    <option value="1">一般捐款</option>
+                                    <option value="2">結緣捐贈</option>
+                                </optgroup>
+                                <optgroup label="交易狀態" data-gp="2">
+                                    <option value="2">已結案</option>
+                                    <option value="1">未結案</option>
+                                </optgroup>
+                                <optgroup label="繳款狀態" data-gp="3">
+                                    <option value="2">已付款</option>
+                                    <option value="1">待付款</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="searchs">
+                        <div class="input-group">
+                            <input type="text" class="form-control dataSearch" placeholder="捐款人名稱"
+                                   aria-label="Recipient's username" aria-describedby="btnSearch" id="dataSearch">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary btnSearch" type="button"
+                                        id="btnSearch">
+                                    篩選
+                                </button>
+                                <button class="btn btn-outline-secondary btnExport" type="button"
+                                        id="btnExport">
+                                    匯出篩選結果
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+        <div class="searchBlock">
+            <div class="contentPart">
+                <div class="filters">
+                    <label for="dataFilter">依捐款篩選設定</label>
+                    <div class="input-group">
+                        <select class="custom-select" id="inputGroupSelect04"
+                                aria-label="Example select with button addon">
+                            <option selected value="0">篩選方式</option>
+                            <optgroup label="捐款來源" data-gp="1">
+                                <option value="1">一般捐款</option>
+                                <option value="2">結緣捐贈</option>
+                            </optgroup>
+                            <optgroup label="交易狀態" data-gp="2">
+                                <option value="2">已結案</option>
+                                <option value="1">未結案</option>
+                            </optgroup>
+                            <optgroup label="繳款狀態" data-gp="3">
+                                <option value="2">已付款</option>
+                                <option value="1">待付款</option>
+                            </optgroup>
+                            <optgroup label="手動上傳" data-gp="4">
+                                <option value="Y">是</option>
+                                <option value="N">否</option>
+                            </optgroup>
+                            <optgroup label="捐款方式" data-gp="5">
+                                <option value="1">線上刷卡</option>
+                                <option value="2">虛擬帳號</option>
+                                <option value="4">超商代碼(7-11)</option>
+                                <option value="6">超商代碼(FamilyMart)</option>
+                                <option value="9">超商代碼(OK)</option>
+                                <option value="10">超商代碼(萊爾富)</option>
+                                <option value="83">銀行匯款</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+                <div class="dateFilter">
+                    <label for="dateSearch">依付款時間篩選</label>
+                    <div class="input-group">
+                        <input type="text" name="datefilter" class="form-control dateSearch" placeholder="點擊選擇日期區間" readonly>
+                    </div>
+                </div>
+                <div class="searchs">
+                    <label for="dataSearch">依捐款姓名篩選</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control dataSearch" placeholder="輸入捐款人名稱" aria-label="Recipient's username" aria-describedby="btnSearch" id="dataSearch">
+                    </div>
+                </div>
+            </div>
+            <div class="contentPart">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary btnSearch" type="button" id="btnSearch">篩選</button>
+                    <button class="btn btn-outline-secondary btnExport" type="button" id="btnExport">匯出篩選結果</button>
+                </div>
+            </div>
+        </div>
+        <div class="selectBatch">
+            <div class="features">
+                <button type="button" class="btn btn-outline-dark btnCancelAll">取消選取</button>
+                <button type="button" class="btn btn-outline-danger btnDelAll">刪除</button>
+            </div>
+        </div>
+        <table class="table contentsBlock commonBlock rwdtable tbDonateData pageControllers">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col" class="">批次</th>
+                    <th scope="col" class="width10">捐款編號</th>
+                    <th scope="col" class="leftBlock width8">捐款/請購</th>
+                    <th scope="col" class="leftBlock">捐款日期</th>
+                    <th scope="col" class="leftBlock width20">捐款姓名</th>
+                    <th scope="col" class="leftBlock">贈予單位</th>
+                    <th scope="col" class="leftBlock">捐款方式</th>
+                    <th scope="col" class="">交易狀態</th>
+                    <th scope="col" class="">繳款狀態</th>
+                    <th scope="col" class="">交易明細</th>
+                </tr>
+            </thead>
+            <tbody class="pageContents">
+                @foreach (Admin.Models.DonateRecord item in (List<Admin.Models.DonateRecord>)ViewBag.ObjList)
+                {
+                <tr class="trDonateData">
+                    <td scope="row" data-label="批次">
+                        <div class="form-check">
+                            <input class="form-check-input position-static checkStatus" type="checkbox" id="blankCheckbox" data-sn="@item.OrderId">
+                        </div>
+                    </td>
+                    <td scope="row" data-label="捐款編號">
+                        <div class="numberBlock">@item.OrderId</div>
+                    </td>
+                    <td class="leftBlock tdOrderType" data-id="@item.OrderTypeId" data-label="捐款/請購">
+                        <p>@item.OrderType</p>
+                    </td>
+                    <td class="leftBlock" data-label="捐款日期">
+                        <p>@item.PayDate </p>
+                    </td>
+                    <td class="leftBlock tdBuyerName" data-label="捐款姓名">
+                        <p>@item.BuyerName</p>
+                    </td>
+                    <td class="leftBlock" data-label="贈予單位">
+                        <p>@item.BranchName</p>
+                    </td>
+                    <td class="leftBlock tdPayType" data-manual="@item.PayTypeId" data-label="捐款方式">
+                        <p>@item.PayType </p>
+                    </td>
+                    <td class="tdOrderStatusId" data-id="@item.OrderStatusId" data-label="交易狀態">
+                        @if (item.OrderStatusId.Equals(1))
+                        {
+                            <button type="button" class="btn btn-outline-info btnCloseOrder" data-sn="@item.OrderId">結案</button>
+                        }
+                        else
+                        {
+                            <p>@item.OrderStatus</p>
+                        }
+                    </td>
+                    <td class="tdPayStatusId" data-id="@item.PayStatusId" data-manual="@item.IsManual" data-label="繳款狀態">
+                        @if (item.PayStatusId.Equals(1))
+                        {
+                            <button type="button" class="btn btn-outline-info btnPayEnd" data-sn="@item.OrderId">付款</button>
+                        }
+                        else
+                        {
+                            <p>@item.PayStatus</p>
+                            <p>@(item.IsManual == "Y" ? "Excel匯入" : item.PayDate )</p>
+                        }
+                    </td>
+                    <td data-label="交易明細">
+                        <div class="">
+                            <button type="button" class="btn btn-outline-success btnView" data-sn="@item.OrderId">檢視</button>
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="10">
+                        <div class="paginationz">
+                            <div class="effectz preBlock"></div>
+                            <ul></ul>
+                            <div class="effectz nextBlock"></div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+        <!-- lightBox for edit 一般捐款 -->
+        <div class="lightBoxBlock donateNormal">
+            <div class="lightBox">
+                <div class="lightBoxContent">
+                    <div class="lightBoxHeader">
+                        <p class="mainTitle">一般捐款紀錄</p>
+                        <div class="cancel">
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="lightBoxBody">
+                        <div class="fieldBlock">
+                            <div class="titleField">捐款單位</div>
+                            <div class="contentField"><p class="donateUnit"></p></div>
+                        </div>
+                        <div class="fieldBlock">
+                            <div class="titleField">捐款姓名（公司）</div>
+                            <div class="contentField"><p class="donateName"></p></div>
+                        </div>
+                        <div class="fieldBlock">
+                            <div class="titleField">身分證號（統編）</div>
+                            <div class="contentField"><p class="donateIdNum"></p></div>
+                        </div>
+                        <div class="fieldBlock">
+                            <div class="titleField">聯絡電話</div>
+                            <div class="contentField"><p class="donateTel"></p></div>
+                        </div>
+                        <div class="fieldBlock">
+                            <div class="titleField">地址</div>
+                            <div class="contentField">
+                                <p class="addressField"></p>
+                            </div>
+                        </div>
+                        <div class="fieldBlock">
+                            <div class="titleField">電子信箱</div>
+                            <div class="contentField"><p class="donateMail"></p></div>
+                        </div>
+                        <div class="fieldBlock">
+                            <div class="titleField">捐款方式</div>
+                            <div class="contentField"><p class="donateMethods"></p></div>
+                        </div>
+                        @*<div class="fieldBlock">
+                                <div class="titleField">分期方式</div>
+                                <div class="contentField"><p class="donateStaging">一次付清</p></div>
+                            </div>*@
+                        <div class="fieldBlock">
+                            <div class="titleField">贈予單位</div>
+                            <div class="contentField"><p class="donatebranch"></p></div>
+                        </div>
+                        <div class="fieldBlock">
+                            <div class="titleField">捐款金額</div>
+                            <div class="contentField totalField"><p class="donateAmount"></p><span>元</span></div>
+                        </div>
+                        <div class="fieldBlock">
+                            <div class="titleField">捐款用途</div>
+                            <div class="contentField totalField"><p class="donatePurpose"></p></div>
+                        </div>
+                        <div class="fieldBlock">
+                            <div class="titleField">是否開收據</div>
+                            <div class="contentField totalField"><p class="donateReceipt"></p></div>
+                        </div>
+                        @*<div class="fieldBlock">
+                                <div class="titleField">是否寄送</div>
+                                <div class="contentField totalField"><p class="donateDelivery">是嘛</p></div>
+                            </div>*@
+                        <div class="fieldBlock">
+                            <div class="titleField">是否開公開捐款姓名及金額</div>
+                            <div class="contentField totalField"><p class="donatePublic"></p></div>
+                        </div>
+                    </div>
+                    <div class="lightBoxFooter"></div>
+                </div>
+            </div>
+        </div>
+        <!-- lightBox for edit 結緣捐贈 -->
+        <div class="lightBoxBlock donateRelated">
+            <div class="lightBox">
+                <div class="lightBoxContent">
+                    <div class="lightBoxHeader">
+                        <p class="mainTitle">結緣捐贈紀錄</p>
+                        <div class="cancel">
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="lightBoxBody">
+                        <div class="fieldBlock">
+                            <div class="titleField">捐款單位</div>
+                            <div class="contentField"><p class="relatedUnit"></p></div>
+                        </div>
+                        <div class="fieldBlock">
+                            <div class="titleField">捐款姓名（公司）</div>
+                            <div class="contentField"><p class="relatedName"></p></div>
+                        </div>
+                        <div class="fieldBlock">
+                            <div class="titleField">身分證號（統編）</div>
+                            <div class="contentField"><p class="relatedIdNum"></p></div>
+                        </div>
+                        <div class="fieldBlock">
+                            <div class="titleField">聯絡電話</div>
+                            <div class="contentField"><p class="relatedTel"></p></div>
+                        </div>
+                        <div class="fieldBlock">
+                            <div class="titleField">電子信箱</div>
+                            <div class="contentField"><p class="relatedMail"></p></div>
+                        </div>
+                        <div class="fieldBlock tableBlock">
+                            <div class="titleField">結緣捐贈</div>
+                            <div class="contentField">
+                                <table class="relatedProduct">
+                                    @*<tr><th>結緣方式</th><th class="centerBlock">數量</th></tr>
+                                        <tr><td clas="relatedGood">捐款 1,000 元贈送蓮生活佛水瓶</td><td class="centerBlock relatedQz">8</td></tr>
+                                        <tr><td clas="relatedGood">捐款 1,000 元贈送蓮生活佛水瓶</td><td class="centerBlock relatedQz">8</td></tr>*@
+                                </table>
+                            </div>
+                        </div>
+                        <div class="fieldBlock">
+                            <div class="titleField">捐款方式</div>
+                            <div class="contentField"><p class="relatedMethods"></p></div>
+                        </div>
+                        @*<div class="fieldBlock">
+                                <div class="titleField">分期方式</div>
+                                <div class="contentField"><p class="relatedStaging">一次付清</p></div>
+                            </div>*@
+                        <div class="fieldBlock">
+                            <div class="titleField">贈予單位</div>
+                            <div class="contentField"><p class="relatedbranch"></p></div>
+                        </div>
+                        <div class="fieldBlock">
+                            <div class="titleField">捐款金額</div>
+                            <div class="contentField totalField"><p class="relatedAmount"></p><span>元</span></div>
+                        </div>
+                        <div class="fieldBlock">
+                            <div class="titleField">取貨方式</div>
+                            <div class="contentField">
+                                <p class="relatedPick"></p>
+
+                            </div>
+                        </div>
+                        <div class="fieldBlock">
+                            <div class="titleField">備註</div>
+                            <div class="contentField">
+                                <p class="noteField"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lightBoxFooter"></div>
+                </div>
+            </div>
+        </div>
+        <!-- 先將它分成兩個，實際為一個並且判斷使用哪一個編輯內容 -->
+    </div>
+</main>
+
+@section scripts {
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script type="text/javascript">
+        var impu = "@Url.Action("ImportDonateRecord", "Act")";
+
+        $(".btn-xls-help").click(() => {
+            Swal.fire({
+                title: '操作說明',
+                type: 'info',
+                html: `
+                <p style="text-align:left;color:red;">由於舊站僅紀錄捐款，並未有結緣品項的紀錄，因此匯入功能僅有「捐款」，並無「結緣」，並且透過Excel匯入之資料，系統會自動判定為「已付款」。</p><br>
+                <p style="text-align:left;"><b>csv內部分欄位需要填寫代碼，說明如下：</b><br>
+                    <b>捐款單位:</b> 1=個人; 2=公司<br>
+                    <b>捐款方式:</b> 1=線上刷卡; 2=虛擬帳號; 4=7-11代碼; 6=全家代碼; 9=OK代碼; 10=萊爾富代碼; 83=銀行匯款<br>
+                    <b>贈予單位:</b> 輸入「聯絡資訊」模組中，對應分會的「編號」。<br>
+                    <b>是否開收據: </b> Y=開; N=不開
+                </p><br>
+
+                <p style="text-align:left;color:red;">※請注意！半形逗號(,)為csv之裁切字符，請勿使用到，如需使用逗號，請輸入全形逗號(，)。</p>
+
+                <p style="text-align:left;">為了避免Excel公式自動去除0，使用Excel編輯的用戶請依以下步驟來開啟、存檔範例檔。</p>
+                <p style="text-align:left;color:red;">※非使用Excel編輯的用戶可依自己方式編輯範例檔。</p>
+                <br /><p style="font-weight:800;">步驟一：匯入</p>
+                <p><img src="${window.location.origin}/LotusLightAdmin/Document/Member/1.png" width="100%" /></p>
+                <br /><p style="font-weight:800;">步驟二：匯入</p>
+                <p><img src="${window.location.origin}/LotusLightAdmin/Document/Member/2.png" width="100%" /></p>
+                <br /><p style="font-weight:800;">步驟三：匯入</p>
+                <p><img src="${window.location.origin}/LotusLightAdmin/Document/Member/3.png" width="100%" /></p>
+                <br /><p style="font-weight:800;">步驟四：匯入</p>
+                <p><img src="${window.location.origin}/LotusLightAdmin/Document/Member/4.png" width="100%" /></p>
+                <br /><p style="font-weight:800;">步驟五：匯入</p>
+                <p><img src="${window.location.origin}/LotusLightAdmin/Document/Member/4.1.png" width="100%" /></p>
+                <br /><p style="font-weight:800;">步驟六：編輯</p>
+                <p><img src="${window.location.origin}/LotusLightAdmin/Document/Member/5.png" width="100%" /></p>
+                <br /><p style="font-weight:800;">步驟七：存檔</p>
+                <p><img src="${window.location.origin}/LotusLightAdmin/Document/Member/6.png" width="100%" /></p>
+                <br /><p style="font-weight:800;">步驟八：存檔</p>
+                <p><img src="${window.location.origin}/LotusLightAdmin/Document/Member/6.1.png" width="100%" /></p>
+                <br /><p style="font-weight:800;">步驟九：存檔</p>
+                <p><img src="${window.location.origin}/LotusLightAdmin/Document/Member/7.png" width="100%" /></p>
+    `
+            });
+        })
+
+        $(".addMemFiles").change((e) => {
+            if (e.target.files.length > 0) {
+                var postData = new FormData();
+                postData.append(e.target.files[0].name, e.target.files[0]);
+                //alert("posdata:" + e.target.files[0]);
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", impu, true);
+                xhr.onload = function () {
+                    //alert("posdata:" + this.responseText);
+                    if (this.status === 200 && this.responseText === "OK") {
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: '操作成功',
+                            showConfirmButton: false,
+                            timer: 1000
+                        }).then(() => {
+                            window.location.href = window.location.href;
+                        });
+                    } else if (this.status === 200 && this.responseText.indexOf("NG") > -1) {
+                        //alert("posdata:" + this.responseText);
+                        var msg = this.responseText.split(';');
+                        Swal.fire(msg.length > 1 ? msg[1] : "操作失敗");
+                    }
+                };
+                xhr.send(postData);
+                $(".addMemFiles").val('');
+            }
+        })
+
+        // 日期區間
+        $(function () {
+            $('input[name="datefilter"]').daterangepicker({
+                opens: 'left',
+                autoUpdateInput: false,
+                showCustomRangeLabel: true,
+                linkedCalendars: false,
+                showDropdowns: true,
+                minDate: '1911/01/01',
+                maxDate: '2099/01/01',
+                locale: {
+                    format: "YYYY/MM/DD",
+                    applyLabel: "確定",
+                    cancelLabel: "清除",
+                    fromLabel: "開始日期",
+                    toLabel: "結束日期",
+                    customRangeLabel: "自訂日期區間",
+                    daysOfWeek: ["日", "一", "二", "三", "四", "五", "六"],
+                    monthNames: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+                    firstDay: 1
+                }
+            });
+            $('input[name="datefilter"]').on('apply.daterangepicker', function (ev, picker) {
+                $(this).val(picker.startDate.format('YYYY/MM/DD') + ' - ' + picker.endDate.format('YYYY/MM/DD'));
+            });
+            $('input[name="datefilter"]').on('cancel.daterangepicker', function (ev, picker) {
+                $(this).val('');
+            });
+
+        });
+
+        // 篩選
+        $(".btnFilter, .btnSearch").click(() => {
+
+            var query = $(".dataSearch").val().trim();
+            var opt = $("#inputGroupSelect04 option:selected");
+            var gp = opt.parents("optgroup").data("gp");
+
+            var datas = $(".trDonateData");
+
+            datas.each((idx, obj) => {
+
+                var dateCheck = true;
+
+                if ($(".dateSearch").val() != "") {
+                    var sDate1 = $(".dateSearch").val().split('-')[0].trim() + " 00:00:00";
+                    var sDate2 = $(".dateSearch").val().split('-')[1].trim() + " 23:59:59";
+                    var pDate = $(obj).find(".tdPayStatusId p:nth-child(2)").text();
+
+                    if (pDate.length > 0) {
+                        if (Date.parse(pDate) >= Date.parse(sDate1) && Date.parse(pDate) <= Date.parse(sDate2))
+                            dateCheck = true;
+                        else
+                            dateCheck = false;
+                    } else
+                        dateCheck = false;
+                }
+
+
+                if (opt.val() == 0 && $(obj).find(`.tdBuyerName p:contains('${query}')`).length > 0 && dateCheck) {
+
+                    //$(obj).show();
+                    $(obj).removeClass("tr-hide");
+
+                }
+                else {
+                    if (gp == 1) { // 來源
+
+                        if ($(obj).find(".tdOrderType").data("id") == opt.val()
+                            && $(obj).find(`.tdBuyerName p:contains('${query}')`).length > 0
+                            && dateCheck) {
+                            //$(obj).show();
+                            $(obj).removeClass("tr-hide");
+                        } else {
+                            //$(obj).hide();
+                            $(obj).addClass("tr-hide");
+                        }
+
+                    } else if (gp == 2) { // 交易狀態
+
+                        if ($(obj).find(".tdOrderStatusId").data("id") == opt.val()
+                            && $(obj).find(`.tdBuyerName p:contains('${query}')`).length > 0
+                            && dateCheck) {
+                            //$(obj).show();
+                            $(obj).removeClass("tr-hide");
+                        } else {
+                            //$(obj).hide();
+                            $(obj).addClass("tr-hide");
+                        }
+
+                    } else if (gp == 3) { // 繳款狀態
+
+                        if ($(obj).find(".tdPayStatusId").data("id") == opt.val()
+                            && $(obj).find(`.tdBuyerName p:contains('${query}')`).length > 0
+                            && dateCheck) {
+                            //$(obj).show();
+                            $(obj).removeClass("tr-hide");
+                        } else {
+                            //$(obj).hide();
+                            $(obj).addClass("tr-hide");
+                        }
+
+                    } else if (gp == 4) { // 手動上傳
+
+                        if ($(obj).find(".tdPayStatusId").data("manual") == opt.val()
+                            && $(obj).find(`.tdBuyerName p:contains('${query}')`).length > 0
+                            && dateCheck) {
+                            //$(obj).show();
+                            $(obj).removeClass("tr-hide");
+                        } else {
+                            //$(obj).hide();
+                            $(obj).addClass("tr-hide");
+                        }
+
+                    } else if (gp == 5) { // 捐款方式
+
+                        if ($(obj).find(".tdPayType").data("manual") == opt.val()
+                            && $(obj).find(`.tdBuyerName p:contains('${query}')`).length > 0
+                            && dateCheck) {
+                            //$(obj).show();
+                            $(obj).removeClass("tr-hide");
+                        } else {
+                            //$(obj).hide();
+                            $(obj).addClass("tr-hide");
+                        }
+
+                    } else {
+                        //$(obj).hide();
+                        $(obj).addClass("tr-hide");
+                    }
+                }
+            });
+
+            pageTableController(1, pageTable, 10, 2);
+        });
+
+        // 刪除
+        $(".btnDelAll").click(() => {
+            var checkeds = $(".checkStatus:checked");
+            if (checkeds.length > 0) {
+
+                var dels = "";
+                checkeds.each((idx, obj) => {
+                    dels += `${obj.dataset.sn};`;
+                });
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: '確定要刪除這些資料嗎?',
+                    text: '刪除後不可複原，請再次確認是否要刪除？',
+                    showConfirmButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: '確定',
+                    cancelButtonText: '取消'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        var postData = new FormData();
+                        postData.append("Ids", dels);
+
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("POST", "/LotusLightAdmin/Act/DeleteDonateRecord", true);
+                        xhr.onload = function () {
+                            if (this.status === 200 && this.responseText === "OK") {
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: '操作成功',
+                                    showConfirmButton: false,
+                                    timer: 1000
+                                });
+
+                                checkeds.parents("tr").remove();
+                            }
+                            else {
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'error',
+                                    title: '操作失敗',
+                                    showConfirmButton: false,
+                                    timer: 1000
+                                });
+                            }
+                        };
+                        xhr.send(postData);
+                    }
+                });
+            }
+        });
+
+        // 轉結案
+        $(".btnCloseOrder").click((e) => {
+            var id = e.target.dataset.sn;
+            Swal.fire({
+                title: '是否確定轉結案?',
+                text: '轉結案後不可複原，請再次確認是否轉結案？',
+                showConfirmButton: true,
+                showCancelButton: true,
+                confirmButtonText: '確定',
+                cancelButtonText: '取消'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/LotusLightAdmin/Act/ToClose/" + id, true);
+                    xhr.onload = function () {
+                        if (this.status === 200 && this.responseText === "OK") {
+                            var td = e.target.parentElement;
+                            $(td).html("<p>已結案</p>")
+                        }
+                    };
+                    xhr.send();
+                }
+            });
+        });
+
+        // 轉付款
+        $(".btnPayEnd").click((e) => {
+            var id = e.target.dataset.sn;
+            Swal.fire({
+                title: '是否確定轉付款?',
+                text: '轉付款後不可複原，請再次確認是否轉付款？',
+                showConfirmButton: true,
+                showCancelButton: true,
+                confirmButtonText: '確定',
+                cancelButtonText: '取消'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/LotusLightAdmin/Act/ToPayEnd/" + id, true);
+                    xhr.onload = function () {
+                        if (this.status === 200 && this.responseText.indexOf("OK") > -1) {
+                            var paydate = this.responseText.split(';')[1];
+                            var td = e.target.parentElement;
+                            $(td).html(`<p>已付款</p><p>${paydate}</p>`);
+                        }
+                    };
+                    xhr.send();
+                }
+            });
+        });
+
+        // 檢視
+        $(".btnView").click((e) => {
+            var id = e.target.dataset.sn;
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/LotusLightAdmin/Act/GetDonateRecord/" + id, true);
+            xhr.onload = function () {
+                if (this.status === 200) {
+                    var obj = JSON.parse(this.responseText);
+                    // 捐款或請購
+                    if ($(e.target).parents("tr").find(".tdOrderType").data("id") == 1) {
+                        var div = $(".donateNormal");
+
+                        div.find(".donateUnit").text(obj.BuyerType);
+                        div.find(".donateName").text(obj.BuyerName);
+                        div.find(".donateIdNum").text(obj.BuyerId);
+                        div.find(".donateTel").text(obj.BuyerPhone);
+                        div.find(".addressField").text(obj.ReceiptAddress);
+                        div.find(".donateMail").text(obj.BuyerEmail);
+                        div.find(".donateMethods").text(obj.PayType);
+                        div.find(".donatebranch").text(obj.DonateUnit);
+                        div.find(".donateAmount").text(obj.DonateAmount);
+                        div.find(".donatePurpose").text(obj.DonateFor);
+                        div.find(".donateReceipt").text(obj.NeedReceipt);
+                        div.find(".donatePublic").text(obj.NeedAnonymous);
+
+                        $('.donateNormal').addClass('active');
+                        $(".donateRelated").removeClass('active');
+                    }
+                    else {
+                        var div = $(".donateRelated");
+
+                        div.find(".relatedUnit").text(obj.BuyerType);
+                        div.find(".relatedName").text(obj.BuyerName);
+                        div.find(".relatedIdNum").text(obj.BuyerId);
+                        div.find(".relatedTel").text(obj.BuyerPhone);
+                        div.find(".relatedMail").text(obj.BuyerEmail);
+                        div.find(".relatedMethods").text(obj.PayType);
+                        div.find(".relatedbranch").text(obj.DonateUnit);
+                        div.find(".relatedAmount").text(obj.DonateAmount);
+                        div.find(".relatedPick").text(obj.PickupMethod);
+                        div.find(".noteField").text(obj.Remark);
+
+                        var products = "<tr><th>結緣方式</th><th class='centerBlock'>數量</th></tr>";
+                        for (var i = 0; i < obj.Products.length; i++) {
+                            products += `<tr><td clas="relatedGood">${obj.Products[i].Name}</td><td class="centerBlock relatedQz">${obj.Products[i].Qty}</td></tr>`;
+                        }
+                        div.find(".relatedProduct").html(products);
+
+                        $('.donateNormal').removeClass('active');
+                        $(".donateRelated").addClass('active');
+                    }
+                }
+            };
+            xhr.send();
+        });
+
+        // 匯出檔案
+        $(".btnExport").click((e) => {
+
+            var name = $(".dataSearch").val().trim();
+            var opt = $("#inputGroupSelect04 option:selected");
+            var gp = opt.parents("optgroup").data("gp");
+
+            var sDate1 = "";
+            var sDate2 = "";
+
+            if ($(".dateSearch").val() != "") {
+                sDate1 = $(".dateSearch").val().split('-')[0].trim() + " 00:00:00";
+                sDate2 = $(".dateSearch").val().split('-')[1].trim() + " 23:59:59";
+            }
+
+            window.location.href = `/LotusLightAdmin/Act/ExportDonateRecord?gp=${gp}&opt=${opt.val()}&name=${name}&date1=${sDate1}&date2=${sDate2}`;
+        });
+    </script>
+}

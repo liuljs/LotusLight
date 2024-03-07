@@ -1,0 +1,12 @@
+﻿@model List<Admin.Models.VideoType>
+
+@{
+    Layout = null;
+}
+
+@foreach (Admin.Models.VideoType item in Model)
+{
+    <div class="@(item.Focus ? "tab active" : "tab")" data-sn="@item.Sn">
+        <p>@item.Name</p>
+    </div>
+}

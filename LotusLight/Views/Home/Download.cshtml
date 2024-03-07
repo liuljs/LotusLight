@@ -1,0 +1,116 @@
+﻿
+@{
+    ViewBag.Title = "下載專區";
+}
+
+<main class="downLoadPage border">
+    <!-- bannerBlock -->
+    <div class="bannerBlock border">
+        <div class="banner_09 border">
+            <div class="bannerTitleBlock border">
+                <img src="~/assets/img/elements/titleImage/titleImage_12.png" alt="">
+                <p>Downloads</p>
+            </div>
+        </div>
+        <div class="breadCrumbs border">
+            <ul>
+                <li><a href="@Url.Action("Index","Home")">首頁</a></li>
+                <li class="disPlay"><a href="@Url.Action("Download","Home")">下載專區</a></li>
+            </ul>
+        </div>
+    </div>
+    <main class="main">
+        <div class="downLoadBlock border">
+            <div class="downLoadTitleBlock border">
+                <img src="~/assets/img/elements/downLoadImage.png" alt="">
+                <p class="mainTitle">下載專區</p>
+            </div>
+            <table class="files">
+                <thead>
+                    <tr class="titleField">
+                        <th>檔案名稱</th>
+                        <th class="centerBlock">檔案類型<span>（Word｜PDF）</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (LotusLight.Models.Download item in (List<LotusLight.Models.Download>)ViewBag.ObjList)
+                    {
+                        <tr class="contentField">
+                            <td>@item.FileName</td>
+                            <td class="">
+                                <div class="fileTypes border">
+                                    @if (item.ExistsWord)
+                                    {
+                                        <div class="typeWord" data-sn="@item.Sn"><img src="~/assets/img/elements/wordImage.png" alt=""><p>下載</p></div>
+                                    }
+                                    @if (item.ExistsPdf)
+                                    {
+                                        <div class="typePDF" data-sn="@item.Sn"><img src="~/assets/img/elements/PDFImage.png" alt=""><p>下載</p></div>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+
+
+                    @*<tr class="contentField">
+                            <td>華光功德會入會申請書（個人）</td>
+                            <td class="">
+                                <div class="fileTypes border">
+                                    <div class="typeWord"><img src="~/assets/img/elements/wordImage.png" alt=""><p>下載</p></div>
+                                    <div class="typePDF"><img src="~/assets/img/elements/PDFImage.png" alt=""><p>下載</p></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="contentField">
+                            <td>華光功德會入會申請書（個人）</td>
+                            <td class="">
+                                <div class="fileTypes border">
+                                    <div class="typeWord"><img src="~/assets/img/elements/wordImage.png" alt=""><p>下載</p></div>
+                                    <div class="typePDF"><img src="~/assets/img/elements/PDFImage.png" alt=""><p>下載</p></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="contentField">
+                            <td>華光功德會入會申請書（個人）</td>
+                            <td class="">
+                                <div class="fileTypes border">
+                                    <div class="typeWord"><img src="~/assets/img/elements/wordImage.png" alt=""><p>下載</p></div>
+                                    <div class="typePDF"><img src="~/assets/img/elements/PDFImage.png" alt=""><p>下載</p></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="contentField">
+                            <td>華光功德會入會申請書（個人）</td>
+                            <td class="">
+                                <div class="fileTypes border">
+                                    <div class="typeWord"><img src="~/assets/img/elements/wordImage.png" alt=""><p>下載</p></div>
+                                    <div class="typePDF"><img src="~/assets/img/elements/PDFImage.png" alt=""><p>下載</p></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="contentField">
+                            <td>華光功德會入會申請書（個人）</td>
+                            <td class="">
+                                <div class="fileTypes border">
+                                    <div class="typeWord"><img src="~/assets/img/elements/wordImage.png" alt=""><p>下載</p></div>
+                                    <div class="typePDF"><img src="~/assets/img/elements/PDFImage.png" alt=""><p>下載</p></div>
+                                </div>
+                            </td>
+                        </tr>*@
+                </tbody>
+            </table>
+        </div>
+    </main>
+</main>
+
+@section scripts{
+    <script>
+        $(".typeWord").click((e) => {
+            window.location.href = `/Act/GetDownload?sn=${e.currentTarget.dataset.sn}&opt=word`;
+        });
+        $(".typePDF").click((e) => {
+            window.location.href = `/Act/GetDownload?sn=${e.currentTarget.dataset.sn}&opt=pdf`;
+        });
+    </script>
+}

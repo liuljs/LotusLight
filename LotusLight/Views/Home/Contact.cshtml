@@ -1,0 +1,148 @@
+﻿
+@{
+    ViewBag.Title = "聯絡我們";
+}
+
+<main class="contactPage border">
+    <!-- bannerBlock -->
+    <div class="bannerBlock border">
+        <div class="banner_08 border">
+            <div class="bannerTitleBlock border">
+                <img src="~/assets/img/elements/titleImage/titleImage_08.png" alt="">
+                <p>Contacts</p>
+            </div>
+        </div>
+        <div class="breadCrumbs border">
+            <ul>
+                <li><a href="@Url.Action("Index","Home")">首頁</a></li>
+                <li class="disPlay"><a href="@Url.Action("Contact","Home")">聯絡我們</a></li>
+            </ul>
+        </div>
+    </div>
+    <main class="main">
+        <div class="titleBlock">
+            <p class="mainTitle">聯絡資訊</p>
+        </div>
+        <div class="contactsBlock border">
+            <div class="contentPart border">
+                <div class="contactInformations border">
+                    @foreach (LotusLight.Models.Contact item in (List<LotusLight.Models.Contact>)ViewBag.ObjList)
+                    {
+                        <div class="contactItem border">
+                            <div class="itemHeader">
+                                <div class="itemTitleBlock">
+                                    <p class="mainTitle">@item.Name</p>
+                                </div>
+                            </div>
+                            <div class="itemBody">
+                                <p>地址：@item.Address</p>
+                                <p>
+                                    <span>TEL：@item.Tel</span><span class="dividerBlock"></span><span>FAX：@item.Fax</span>
+                                </p>
+                                <p>
+                                    信箱：@item.Mail
+                                </p>
+                                <a href="@item.FbLink" target="_blank">
+                                    <img src="~/assets/img/elements/fbImage_01.png" alt="">臉書粉絲團
+                                </a>
+                            </div>
+                            <div class="itemFooter">
+                                <div class="mapBlock border">
+                                    @Html.Raw(item.GoogleMap)
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="contentPart border">
+                <form id="fmContact" class="contactForm border" method="post" enctype="multipart/form-data">
+                    <div class="formHeader border">
+                        <div class="formTitleBlock">
+                            <p class="mainTitle">聯絡我們</p>
+                        </div>
+                    </div>
+                    <div class="formBody border">
+                        <div class="fieldBlock radioBlock">
+                            <label for="contactUnit">聯絡單位</label>
+                            <div>
+                                <div class="">
+                                    <input type="radio" id="contactUnit1" name="contactUnit" value="個人"
+                                           class="contactUnit" checked>
+                                    <label class="" for="contactUnit1">個人</label>
+                                </div>
+                                <div class="">
+                                    <input type="radio" id="contactUnit2" name="contactUnit" value="公司"
+                                           class="contactUnit">
+                                    <label class="" for="contactUnit2">公司</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fieldBlock">
+                            <label class="titleBlock" for="contactName">
+                                您的姓名（公司）<span class="requiredBlock">必填</span>
+                            </label>
+                            <input type="text" name="contactName" id="contactName">
+                        </div>
+                        <div class="fieldBlock">
+                            <label class="titleBlock" for="contactTel">
+                                聯絡電話（手機）<span class="requiredBlock">必填</span>
+                            </label>
+                            <input type="text" class="contactTel" id="contactTel" name="contactTel">
+                        </div>
+                        <div class="fieldBlock">
+                            <label class="titleBlock" for="contactMail">電子信箱</label>
+                            <input type="text" class="contactMail" id="contactMail" name="contactMail">
+                        </div>
+                        <div class="fieldBlock selectBlock">
+                            @*<label for="contactArea">聯絡地區</label>*@
+                            <label class="titleBlock" for="contactArea">聯絡地區</label>
+                            <select name="contactArea" class="contactArea">
+                                @foreach (LotusLight.Models.Contact item in (List<LotusLight.Models.Contact>)ViewBag.ObjList)
+                                {
+                                    if (!string.IsNullOrEmpty(item.Mail))
+                                    {
+                                        <option value="@item.Sn">@item.Name</option>
+                                    }
+                                }
+                            </select>
+                            @*@foreach (LotusLight.Models.Contact item in (List<LotusLight.Models.Contact>)ViewBag.ObjList)
+                                {
+                                    if (!string.IsNullOrEmpty(item.Mail))
+                                    {
+                                        <div class="">
+                                            <input type="radio" id="contactArea@(item.Sn)" name="contactArea" value="@item.Sn"
+                                                   class="contactArea">
+                                            <label class="" for="contactArea@(item.Sn)">@item.Name</label>
+                                        </div>
+                                    }
+                                }*@
+                        </div>
+                        <div class="fieldBlock">
+                            <label class="titleBlock" for="contactContent">聯絡內容</label>
+                            <textarea name="contactContent" id="contactContent"></textarea>
+                        </div>
+                    </div>
+                    <div class="formFooter border">
+                        <div class="border">
+                            <div class="btn btnReset">
+                                <p>重填</p>
+                            </div>
+                            <div class="btn btnSubmit">
+                                <p>送出表單</p>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+</main>
+
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(() => {
+            $("#fmContact input[type=radio]").eq(0).attr("checked", "checked");
+        });
+    </script>
+}

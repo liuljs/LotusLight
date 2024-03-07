@@ -1,0 +1,257 @@
+﻿@{
+    ViewBag.Title = "活動管理";
+}
+
+<main class="col-md-10">
+    <h2>活動管理</h2>
+    <div class="latestNewsContent">
+        <div class="titleBlock">
+            <h3>活動設定</h3>
+            <button type="button" class="btn btn-light btnExt" data-toggle="modal"
+                    data-target="#exampleModalCenteredScrollable">
+                新增活動
+            </button>
+        </div>
+        <!-- Modal -->
+        <form id="fmAddItem" action="@Url.Action("AddActivity", "Act")" method="post" enctype="multipart/form-data">
+            <div class="modal fade" id="exampleModalCenteredScrollable" tabindex="-1"
+                 aria-labelledby="exampleModalCenteredScrollable" aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">新增最新活動</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body addFormBlock">
+                            <div>
+                                <label for="addTitleImage">活動封面</label>
+                                <div>
+                                    <div class="custom-file">
+                                        <input type="file" name="titleImage" id="addTitleImage" class="custom-file-input addImage addTitleImage">
+                                        <label class="custom-file-label" for="addTitleImage" aria-describedby="inputGroupFileAddon02">
+                                            上傳圖片
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="previewImageBlock">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="addNewsTitle">活動標題</label>
+                                <input type="text" class="form-control addTitle" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="addNewsTitle" name="addNewsTitle" placeholder="必填，50字內" maxlength="50" required>
+                            </div>
+                            <div>
+                                <label for="addDate">活動日期</label>
+                                <input type="date" class="form-control editDate" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="addDate" name="addDate">
+                            </div>
+                            <div>
+                                <label for="addNewsContent1">活動內容_段落1</label>
+                                <textarea class="addContent1 form-control" id="addNewsContent1" name="addNewsContent1" placeholder="必填，2000字內" maxlength="2000" required></textarea>
+                            </div>
+                            <div>
+                                <label for="addNewsContent2">活動內容_段落2</label>
+                                <textarea class="addContent2 form-control" id="addNewsContent2" name="addNewsContent2" placeholder="選填，2500字內" maxlength="2500"></textarea>
+                            </div>
+                            <div>
+                                <label for="addNewsImage">新增圖片</label>
+                                <div class="custom-file">
+                                    <input type="file" name="newsImage" id="addNewsImage" class="custom-file-input addImage addMulImage" multiple max="2">
+                                    <label class="custom-file-label" for="addNewsImage">上傳檔案</label>
+                                </div>
+                                <div class="previewImageBlock">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="reset" class="btn btn-secondary btnReset">重填</button>
+                            <button type="submit" class="btn btn-primary btnAdd">新增</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+        <table class="table contentsBlock commonBlock rwdtable pageControllers">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col" class="width10">活動編號</th>
+                    <th scope="col" class="">活動時間</th>
+                    <th scope="col" class="leftBlock">活動標題</th>
+                    <th scope="col" class="">置頂設定</th>
+                    <th scope="col" class="">活動設定</th>
+                </tr>
+            </thead>
+            <tbody class="pageContents">
+                @foreach (Admin.Models.Activity item in (List<Admin.Models.Activity>)ViewBag.ObjList)
+                {
+                    <tr>
+                        <td scope="row" data-label="活動編號">
+                            <div class="numberBlock">@item.Sn</div>
+                        </td>
+                        <td data-label="活動時間">
+                            <p>@item.ArticleDate.ToString("yyyy/MM/dd")</p>
+                        </td>
+                        <td class="leftBlock" data-label="活動標題">
+                            <p>@item.Title</p>
+                        </td>
+                        <td data-label="置頂設定">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" id="customSwitch_@item.Sn" class="custom-control-input btnTopSwitch" data-sn="@item.Sn" checked="@item.IsTop.Equals("Y")">
+                                <label class="custom-control-label" for="customSwitch_@item.Sn">置頂</label>
+                            </div>
+                        </td>
+                        <td data-label="活動設定">
+                            <div class="">
+                                <button type="button" class="btn btn-outline-success btnEdit" data-sn="@item.Sn">編輯</button>
+                                <button type="button" class="btn btn-outline-danger btnDel" data-sn="@item.Sn">刪除</button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5">
+                        <div class="paginationz">
+                            <div class="effectz preBlock"></div>
+                            <ul></ul>
+                            <div class="effectz nextBlock"></div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+        <!-- lightBox for edit -->
+
+        <form id="fmEditItem" enctype="multipart/form-data">
+            <div class="lightBoxBlock border">
+                <div class="lightBox border">
+                    <div class="lightBoxContent border">
+                        <div class="lightBoxHeader border">
+                            <p class="mainTitle">編輯活動</p>
+                            <div class="cancel border">
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="lightBoxBody border">
+                            <div class="">
+                                <label for="editTitleImage">活動封面</label>
+                                <div class="titleImageBlock">
+                                    <div>
+                                        <div class="custom-file fileBlock">
+                                            <input type="file" id="editTitleImage" name="editTitleImage" class="custom-file-input addImage editTitleImage">
+                                            <label class="custom-file-label" for="editTitleImage" aria-describedby="inputGroupFileAddon02">
+                                                編輯封面
+                                            </label>
+                                        </div>
+                                        <button type="button" class="btn btn-secondary btnBack" data-lnk="">原圖</button>
+                                    </div>
+                                    <div class="previewImageBlock titleImage">
+                                        <img class="previewImage" src="#" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="editTitle">活動標題</label>
+                                <input type="text" class="form-control editTitle" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="editTitle" name="editTitle">
+                            </div>
+                            <div>
+                                <label for="editDate">活動日期</label>
+                                <input type="date" class="form-control editDate" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="editDate" name="editDate">
+                            </div>
+                            <div>
+                                <label for="editNewsContent1">活動內容_段落1</label>
+                                <textarea class="form-control editContent1" id="editNewsContent1" name="editNewsContent1" placeholder="必填，2000字內" maxlength="2000"></textarea>
+                            </div>
+                            <div>
+                                <label for="editNewsContent2">活動內容_段落2</label>
+                                <textarea class="form-control editContent2" id="editNewsContent2" name="editNewsContent2" placeholder="選填，2500字內" maxlength="2500"></textarea>
+                            </div>
+                            <div>
+                                <label for="">活動圖片</label>
+                                <input type="hidden" id="hidDelIds" name="hidDelIds" value="" />
+                                <div class="showImageBlock">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="editNewsImage">新增圖片 ()</label>
+                                <div class="custom-file">
+                                    <input type="file" id="editNewsImage" name="editNewsImage" class="custom-file-input addImage editMulImage" multiple>
+                                    <label class="custom-file-label" for="editNewsImage">上傳檔案</label>
+                                </div>
+                                <div class="previewImageBlock"></div>
+                            </div>
+                        </div>
+                        <div class="lightBoxFooter border">
+                            <div>
+                                <button type="button" class="btn btn-primary btnSave" data-sn="">儲存</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+
+@section scripts {
+    <script>
+        var topu = "@Url.Action("TopActivity", "Act")";
+        var getu = "@Url.Action("GetActivity", "Act")";
+        var edtu = "@Url.Action("EditActivity", "Act")";
+        var delu = "@Url.Action("DeleteActivity", "Act")";
+        var ntu = "@Url.Action("GetActivityImage", "Act")";
+        var niu = "@Url.Action("GetActivityImages", "Act")";
+
+        // 代入欲編輯的消息資料
+        $(".btnEdit").click((e) => {
+            var id = e.target.dataset.sn;
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", getu + "/" + id, true);
+            xhr.onload = function () {
+                if (this.status === 200) {
+                    var obj = JSON.parse(this.response);
+                    // 按鈕
+                    $(".btnSave")[0].dataset.sn = id;
+
+                    // 消息主檔
+                    $(".btnBack").data("lnk", ntu + "/" + id);
+                    $(".titleImage img").attr("src", $(".btnBack").data("lnk"));
+                    $(".editTitle").val(obj.Title);
+                    $(".editContent1").val(obj.P1);
+                    $(".editContent2").val(obj.P2);
+
+                    if (obj.ArticleDate.split("T")[0] !== "0001-01-01" && obj.ArticleDate.split("T")[0].length > 0)
+                        $(".editDate").val(obj.ArticleDate.split("T")[0]);
+                    else
+                        $(".editDate").val('');
+
+                    // 消息圖片
+                    $(".showImageBlock").html('');
+                    for (var i = 0; i < obj.Imgs.length; i++) {
+                        var img = obj.Imgs[i];
+                        $(".showImageBlock").append(`
+                    <div class="showImageItem">
+                        <div class="btnDelImage" data-sn="${img.Sn}">
+                            <img src="${window.location.origin}/assets/img/elements/delImage.png" data-sn="${img.Sn}" alt="">
+                        </div>
+                        <img src="${niu}/${img.Sn}" alt="" class="showImage">
+                    </div>
+                `);
+                    }
+                    // 刪除事件
+                    $(".btnDelImage").click((e) => {
+                        var sn = e.target.dataset.sn;
+                        delImgs.push(sn);
+                        e.target.parentElement.parentElement.remove(e.target.parentElement);
+                    });
+                }
+            };
+            xhr.send();
+        });
+    </script>
+    <script src="~/assets/js/format1.js"></script>
+}

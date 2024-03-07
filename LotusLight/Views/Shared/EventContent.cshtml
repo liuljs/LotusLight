@@ -1,0 +1,118 @@
+﻿@{
+    Layout = null;
+}
+
+<div class="pageSelector border">
+    <a href="javascript:;" data-url="@Url.Action(ViewBag.IsNews == "Y" ? "News" : "Activity", "Home")" class="btnBackList"><p>回@(ViewBag.IsNews == "Y" ? "消息" : "活動")列表</p></a><!-- 隨這則改變 消息或是活動，以及連結至列表 -->
+    <div class="btnSelect border">
+        @if (ViewBag.Prev != null)
+        {
+            <div class="btnPrev" data-url="@Url.Action(ViewBag.IsNews == "Y" ? $"GetNews/{ViewBag.Prev}" : $"GetActivity/{ViewBag.Prev}", "Home")"><p>上一則</p></div>
+        }
+        @if (ViewBag.Next != null)
+        {
+            <div class="btnNext" data-url="@Url.Action(ViewBag.IsNews == "Y" ? $"GetNews/{ViewBag.Next}" : $"GetActivity/{ViewBag.Next}", "Home")"><p>下一則</p></div>
+        }
+    </div>
+</div>
+<br>
+<div class="insideContents border">
+    <div class="dateBlock border">
+        <p>@ViewBag.ArticleDate</p>
+    </div>
+    <div class="insideTitleBlock border">
+        <p class="mainTitle">@ViewBag.Title</p>
+    </div>
+    <div class="contentBlock border">
+        <p>
+            @Html.Raw(ViewBag.P1)
+        </p>
+        <p>
+            @Html.Raw(ViewBag.P2)
+        </p>
+    </div>
+    <div class="contentImage border">
+
+        @foreach (var sn in ViewBag.Images.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
+        {
+            if (ViewBag.IsNews == "Y")
+            {
+                <img src="@Url.Action($"GetNewsContentImage/{sn}", "Act")" alt="">
+            }
+            else
+            {
+                <img src="@Url.Action($"GetActivityContentImage/{sn}", "Act")" alt="">
+            }
+        }
+    </div>
+    <div class="contentVideo border">
+        @Html.Raw(ViewBag.V1)
+        @Html.Raw(ViewBag.V2)
+    </div>
+</div>
+<div class="pageSelector border">
+    <a href="javascript:;" data-url="@Url.Action(ViewBag.IsNews == "Y" ? "News" : "Activity", "Home")" class="btnBackList"><p>回@(ViewBag.IsNews == "Y" ? "消息" : "活動")列表</p></a><!-- 隨這則改變 消息或是活動，以及連結至列表 -->
+    <div class="btnSelect border">
+        @if (ViewBag.Prev != null)
+        {
+            <div class="btnPrev" data-url="@Url.Action(ViewBag.IsNews == "Y" ? $"GetNews/{ViewBag.Prev}" : $"GetActivity/{ViewBag.Prev}", "Home")"><p>上一則</p></div>
+        }
+        @if (ViewBag.Next != null)
+        {
+            <div class="btnNext" data-url="@Url.Action(ViewBag.IsNews == "Y" ? $"GetNews/{ViewBag.Next}" : $"GetActivity/{ViewBag.Next}", "Home")"><p>下一則</p></div>
+        }
+    </div>
+</div>
+
+<script type="text/javascript">
+    try { console.log(nowPage); } catch { var nowPage = 1; }
+
+    var contentVideo = $('.contentVideo');
+    contentVideo.hide();
+    contentVideo.each(function () {
+        $(this).has('iframe').show();
+        $(this).find('iframe').removeAttr('width height');
+    });
+
+    $(".btnBackList").click((e) => {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", e.currentTarget.dataset.url, true);
+        xhr.onload = function () {
+            if (this.status === 200) {
+                $(".divEventContent").html(this.responseText);
+
+                var newsPage = $('.newsPage').find('.pageControllers');
+                pageController(nowPage, newsPage, 5, 2);
+
+                var eventPage = $('.eventPage').find('.pageControllers');
+                pageController(nowPage, eventPage, 3, 2);
+
+                console.log(window.location.host)
+                window.history.replaceState('', '','/Home/Events');
+            }
+        };
+        xhr.send();
+    });
+
+    $(".btnPrev, .btnNext").click((e) => {
+        let num = e.currentTarget.dataset.url.split("/");
+        let tit;
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", e.currentTarget.dataset.url, true);
+        xhr.onload = function () {
+            if (this.status === 200) {
+                $(".divEventContent").html(this.responseText);
+                console.log(num)
+                if (num[2] == "GetNews") {
+                    tit = "N";
+                } else {
+                    tit = "A"
+                };
+                window.history.replaceState('', '', tit + num[num.length - 1]);
+
+
+            }
+        };
+        xhr.send();
+    });
+</script>

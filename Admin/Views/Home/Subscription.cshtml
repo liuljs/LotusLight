@@ -1,0 +1,120 @@
+﻿
+@{
+    ViewBag.Title = "訂閱管理";
+}
+
+<main class="col-md-10">
+    <h2>訂閱管理</h2>
+    <div class="subsContent">
+        <div class="titleBlock">
+            <h3>訂閱設定</h3>
+            <div>
+                <input type="text" class="form-control addGenre" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="郵件地址" maxlength="250">
+                <button type="button" class="btn btn-outline-secondary btnAdd">新增訂閱</button>
+                <button type="button" class="btn btn-outline-secondary btnExportPostString" style="width: 150px; margin-left: 10px;">寄件字串</button>
+            </div>
+        </div>
+        
+        <table class="table contentsBlock commonBlock rwdtable pageControllers">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col" class="width10">訂閱編號</th>
+                    <th scope="col" class="leftBlock">電子信箱</th>
+                    <th scope="col" class="">訂閱設定</th>
+                </tr>
+            </thead>
+            <tbody class="pageContents">
+                @foreach (Admin.Models.Subscription item in (List<Admin.Models.Subscription>)ViewBag.ObjList)
+                {
+                    <tr>
+                        <td scope="row" data-label="訂閱編號">
+                            <div class="numberBlock">@item.Sn</div>
+                        </td>
+                        <td data-label="電子信箱">
+                            <input type="text" class="form-control editMail" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="@item.Mail" placeholder="必填，250字內" maxlength="250" required readonly>
+                        </td>
+                        <td data-label="資訊設定">
+                            <div class="">
+                                <button type="button" class="btn btn-outline-info btnEdit">編輯</button>
+                                <button type="button" class="btn btn-outline-success btnSave" data-sn="@item.Sn" style="display:none;">儲存</button>
+                                <button type="button" class="btn btn-outline-danger btnDel" data-sn="@item.Sn">刪除</button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5">
+                        <div class="paginationz">
+                            <div class="effectz preBlock"></div>
+                            <ul></ul>
+                            <div class="effectz nextBlock"></div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</main>
+
+@section scripts {
+    <script>
+        var addu = "@Url.Action("AddSubscription", "Act")";
+        var edtu = "@Url.Action("EditSubscription", "Act")";
+        var delu = "@Url.Action("DeleteSubscription", "Act")";
+
+        function getPostData(e) {
+            var tr = e.target.parentElement.parentElement.parentElement;
+            var postData = new FormData();
+            postData.append('editMail', $(tr).find('.editMail').val());
+            return postData;
+        }
+
+        $(".btnAdd").click(() => {
+
+            var mail = $(".addGenre").val().trim();
+
+            if (mail.length > 0) {
+                var postData = new FormData();
+                postData.append('addGenre', mail);
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", addu, true);
+                xhr.onload = function () {
+                    if (this.status === 200 && this.responseText === "OK") {
+                        window.location.href = window.location.href;
+                    }
+                };
+                xhr.send(postData);
+            } else {
+                Swal.fire('請輸入郵件地址！');
+            }
+        });
+
+        $(".btnExportPostString").click(() => {
+            var postString = "";
+            $(".editMail").each((idx, obj) => {
+                postString += obj.value + ";";
+            });
+            Swal.fire({
+                icon: 'info',
+                title: '已產生寄件字串！',
+                text: '請將以下字串貼至您新增郵件的「收件人」',
+                input: 'text',
+                inputValue: postString,
+                inputAttributes: {
+                    readonly: 'readonly'
+                },
+                confirmButtonText: '複製到剪貼簿'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $(".swal2-input")[0].select();
+                    $(".swal2-input")[0].setSelectionRange(0, 99999);
+                    document.execCommand("copy");
+                    Swal.fire('已成功複製到剪貼簿！');
+                }
+            })
+        });
+    </script>
+    <script src="~/assets/js/format3.js"></script>
+}

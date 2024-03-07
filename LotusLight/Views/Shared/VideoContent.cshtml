@@ -1,0 +1,52 @@
+﻿@model List<LotusLight.Models.Video>
+
+@{
+    Layout = null;
+}
+
+<ul>
+    @foreach (LotusLight.Models.Video item in Model)
+    {
+        <li class="videoPending">
+            <div class="pendingVideos border">
+                <div class="contentPart border">
+                    <div class="pendingVideoImage border">
+                        <img src="@Url.Action("GetVideoImage","Act")/@item.Sn" alt="">
+                    </div>
+                </div>
+                <div class="contentPart border">
+                    <div class="contentBlock border">
+                        <div class="titleBlock border">
+                            <p class="mainTitle">@item.Name</p>
+                        </div>
+                        <div class="contentText border">
+                            <p>@Html.Raw(item.P1)</p>
+                            <p>@Html.Raw(item.P2)</p>
+                        </div>
+                        <div class="hideBlock border">
+                            <div class="hiddenBlock">@item.Lnk</div>
+                            <p>...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    }
+</ul>
+
+<script type="text/javascript">
+    $(document).ready(() => {
+        $(".videoPending").eq(0).addClass('active');
+    });
+
+    $(".videoPending").click((e) => {
+        $(".videoPlaysTitleBlock .mainTitle").text($(e.currentTarget).find(".titleBlock .mainTitle").text());
+        $(".videoPlaysContents").html($(e.currentTarget).find(".contentText").html());
+        $(".videoPlays").html($(e.currentTarget).find(".hiddenBlock").text());
+
+        $(e.currentTarget).addClass('active').siblings().removeClass('active');
+        $('html,body').animate({
+            scrollTop: $(".videoTabsBlock").offset().top
+        }, 500);
+    });
+</script>

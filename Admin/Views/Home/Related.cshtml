@@ -1,0 +1,213 @@
+﻿
+@{
+    ViewBag.Title = "請購管理";
+}
+
+<main class="col-md-10">
+    <h2>請購管理</h2>
+    <div class="recruitsContent">
+        <div class="titleBlock">
+            <h3>請購設定</h3>
+            <button type="button" class="btn btn-light btnExt" data-toggle="modal" data-target="#exampleModalCenteredScrollable">新增請購</button>
+        </div>
+        <!-- Modal -->
+        <form id="fmAddItem" action="@Url.Action("AddRelated", "Act")" method="post" enctype="multipart/form-data">
+            <div class="modal fade" id="exampleModalCenteredScrollable" tabindex="-1"
+                 aria-labelledby="exampleModalCenteredScrollable" aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">新增請購訊息</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body addFormBlock">
+                            <div>
+                                <label for="addRecruitImage">請購圖片</label>
+                                <div>
+                                    <div class="custom-file">
+                                        <input type="file" id="addRecruitImage" name="addRecruitImage" class="custom-file-input addImage addTitleImage">
+                                        <label class="custom-file-label" for="addRecruitImage" aria-describedby="inputGroupFileAddon02">
+                                            上傳圖片
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="previewImageBlock">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="addTitle">請購標題</label>
+                                <input type="text" id="addTitle" name="addTitle" class="form-control addTitle" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="必填，50字內" maxlength="50" required>
+                            </div>
+                            <div>
+                                <label for="addPurchasePrice">請購金額</label>
+                                <input type="text" id="addPurchasePrice" name="addPurchasePrice" class="form-control addPurchasePrice" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="必填" required>
+                            </div>
+                            <div>
+                                <label for="addContent1">請購內容_段落1</label>
+                                <textarea class="form-control addContent1" id="addContent1" name="addContent1" placeholder="必填，1000字內" maxlength="1000" required></textarea>
+                            </div>
+                            <div>
+                                <label for="addContent2">請購內容_段落2</label>
+                                <textarea class="form-control addContent2" id="addContent2" name="addContent2" placeholder="選填，1000字內" maxlength="1000"></textarea>
+                            </div>
+                            <div>
+                                <label for="addNotes">注意事項</label>
+                                <input type="text" id="addNotes" name="addNotes" class="form-control addNotes" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="選填，50字內" maxlength="50">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="reset" class="btn btn-secondary btnReset">重填</button>
+                            <button type="submit" class="btn btn-primary btnAdd">新增</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="contentsBlock">
+            <div class="container">
+                <div class="row">
+
+                    @foreach (Admin.Models.Related item in (List<Admin.Models.Related>)ViewBag.ObjList)
+                    {
+                        <div class="col-md-6 cards">
+                            <div class="card mb-4 shadow-sm">
+                                <div class="card-header headerBackGround">
+                                    <p class="cardsHeader">訊息編號：@item.Sn</p>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <p class="cardsTitle">請購圖片：</p>
+                                        <img src="@Url.Action("GetRelatedImage","Act")/@item.Sn" class="img-fluid" alt="">
+                                    </li>
+                                    <li class="list-group-item">
+                                        <p class="cardsTitle">請購標題：</p>
+                                        <p class="purchaseTitle">@item.Title</p>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <p class="cardsTitle">請購金額：</p>
+                                        <p class="purchaseSubTitle">@item.Amount<span>元</span></p>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <p class="cardsTitle">請購內容：</p>
+                                        <p class="purchaseContent purchaseContent1">
+                                            @item.P1
+                                        </p>
+                                        <p class="purchaseContent purchaseContent2">
+                                            @item.P2
+                                        </p>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <p class="cardsTitle">注意事項：</p>
+                                        <p class="purchaseTitle">@item.Notes</p>
+                                    </li>
+                                </ul>
+                                <div class="card-body">
+                                    <button type="button" class="btn btn-outline-success btnEdit" data-sn="@item.Sn">編輯</button>
+                                    <button type="button" class="btn btn-outline-danger btnDel" data-sn="@item.Sn">刪除</button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+        <!-- lightBox for edit -->
+        <form id="fmEditItem" enctype="multipart/form-data">
+            <div class="lightBoxBlock border">
+                <div class="lightBox border">
+                    <div class="lightBoxContent border">
+                        <div class="lightBoxHeader border">
+                            <p class="mainTitle">編輯請購訊息</p>
+                            <div class="cancel border">
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="lightBoxBody border">
+                            <div class="">
+                                <label for="editTitleImage">請購圖片</label>
+                                <div class="titleImageBlock">
+                                    <div>
+                                        <div class="custom-file fileBlock">
+                                            <input type="file" id="editTitleImage" name="editTitleImage" class="custom-file-input addImage editTitleImage">
+                                            <label class="custom-file-label" for="editTitleImage" aria-describedby="inputGroupFileAddon02">
+                                                編輯圖片
+                                            </label>
+                                        </div>
+                                        <button type="button" class="btn btn-secondary btnBack">原圖</button>
+                                    </div>
+                                </div>
+                                <div class="previewImageBlock titleImage">
+                                    <img class="previewImage" src="#" alt="">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="editRecruitTitle">請購標題</label>
+                                <input type="text" class="form-control editTitle" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="editTitle" name="editTitle" placeholder="必填，50字內" maxlength="50" required>
+                            </div>
+                            <div>
+                                <label for="editPurchasePrice">請購金額</label>
+                                <input type="text" class="form-control editPurchasePrice" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="editPurchasePrice" name="editPurchasePrice" placeholder="必填" required>
+                            </div>
+                            <div>
+                                <label for="editContent1">消息內容_段落1</label>
+                                <textarea class="editContent1 form-control" id="editContent1" name="editContent1" placeholder="必填，1000字內" maxlength="1000" required></textarea>
+                            </div>
+                            <div>
+                                <label for="editContent2">消息內容_段落2</label>
+                                <textarea class="editContent2 form-control" id="editContent2" name="editContent2" placeholder="選填，1000字內" maxlength="1000"></textarea>
+                            </div>
+                            <div>
+                                <label for="editNotes">注意事項</label>
+                                <input type="text" class="form-control editNotes" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="editNotes" name="editNotes" placeholder="選填，50字內" maxlength="50">
+                            </div>
+                        </div>
+                        <div class="lightBoxFooter border">
+                            <div>
+                                <button type="button" class="btn btn-primary btnSave">儲存</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+
+@section scripts {
+    <script>
+        var getu = "@Url.Action("GetRelated", "Act")";
+        var edtu = "@Url.Action("EditRelated", "Act")";
+        var delu = "@Url.Action("DeleteRelated", "Act")";
+        var ntu = "@Url.Action("GetRelatedImage", "Act")";
+
+        // 代入欲編輯的消息資料
+        $(".btnEdit").click((e) => {
+            var id = e.target.dataset.sn;
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", getu + "/" + id, true);
+            xhr.onload = function () {
+                if (this.status === 200) {
+                    var obj = JSON.parse(this.response);
+                    // 按鈕
+                    $(".btnSave")[0].dataset.sn = id;
+
+                    // 消息主檔
+                    $(".btnBack").data("lnk", ntu + "/" + id);
+                    $(".titleImage img").attr("src", $(".btnBack").data("lnk"));
+                    $(".editTitle").val(obj.Title);
+                    $(".editPurchasePrice").val(obj.Amount);
+                    $(".editContent1").val(obj.P1);
+                    $(".editContent2").val(obj.P2);
+                    $(".editNotes").val(obj.Notes);
+                }
+            };
+            xhr.send();
+        });
+
+    </script>
+    <script src="~/assets/js/format2.js"></script>
+}

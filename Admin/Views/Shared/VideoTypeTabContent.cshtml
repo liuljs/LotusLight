@@ -1,0 +1,280 @@
+﻿@model List<Admin.Models.VideoType>
+
+@{
+    Layout = null;
+}
+
+<!-- Modal -->
+<form id="fmAddVideo" method="post" enctype="multipart/form-data">
+    <div class="modal fade" id="exampleModalCenteredScrollable" tabindex="-1"
+         aria-labelledby="exampleModalCenteredScrollable" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">新增影片</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body addFormBlock">
+                    <div>
+                        <label for="addTitleImage">影片縮圖</label>
+                        <div>
+                            <div class="custom-file fileBlock">
+                                <input type="file" id="addTitleImage" name="addTitleImage" class="custom-file-input addImage addTitleImage">
+                                <label class="custom-file-label" for="addTitleImage" aria-describedby="inputGroupFileAddon02">
+                                    編輯封面
+                                </label>
+                            </div>
+                        </div>
+                        <div class="previewImageBlock">
+                            <img class="previewImage" src="#" alt="">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="addTitle">影片標題</label>
+                        <input type="text" id="addTitle" name="addTitle" class="form-control addTitle" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="必填，50字內" maxlength="50" required>
+                    </div>
+                    <div>
+                        <label for="addMoviesContent1">影片簡述_段落1</label>
+                        <textarea class="addContent1 form-control" id="addMoviesContent1" name="addMoviesContent1" placeholder="選填，250字內" maxlength="250"></textarea>
+                    </div>
+                    <div>
+                        <label for="addMoviesContent2">影片簡述_段落2</label>
+                        <textarea class="addContent2 form-control" id="addMoviesContent2" name="addMoviesContent2" placeholder="選填，250字內" maxlength="250"></textarea>
+                    </div>
+                    <div>
+                        <label for="addMovieURL">影片連結</label>
+                        <input type="text" id="addMovieURL" class="form-control addLinkURL" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="必填，450字內" maxlength="450" required>
+                        <input type="hidden" name="addMovieURL" value="">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-secondary btnReset">重填</button>
+                    <button type="button" class="btn btn-primary btnAdd">新增</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@foreach (Admin.Models.VideoType item in Model)
+{
+    <div class="@(item.Focus ? "tabContent active" : "tabContent")" data-sn="@item.Sn">
+        <div class="videoGenreBlock">
+            <h3>分類名稱</h3>
+            <div>
+                <input type="text" class="form-control editGenre" id="editGenre" name="editGenre" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="@item.Name" placeholder="必填，50字內" required>
+                <button type="button" class="btn btn-outline-success btnSaveGenre" data-sn="@item.Sn">儲存</button>
+                <button type="button" class="btn btn-outline-danger btnDelGenre" data-sn="@item.Sn">刪除</button>
+            </div>
+        </div>
+        <div class="videosContent">
+            <div class="titleBlock">
+                <h3>影片設定</h3>
+                <button type="button" class="btn btn-light btnExt" data-toggle="modal" data-target="#exampleModalCenteredScrollable">新增影片</button>
+                <button type="button" class="btn btn-secondary btn-lnk-help" style="margin-left: 10px; padding: 5px 20px; font-weight: bold;">影片連結說明</button>
+            </div>
+
+            <div class="contentsBlock">
+                <div class="container">
+                    <div class="row">
+                        @{Html.RenderAction("VideoBlock", "Act", new { id = item.Sn });}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    // 連結說明
+    $(".btn-lnk-help").click(() => {
+        Swal.fire({
+            title: '操作說明',
+            type: 'info',
+            html: `<p style="text-align:left;">請直接複製YouTube的整段嵌入式語法，複製方式如下：</p>
+                <br /><p style="font-weight:800;">步驟一：進入到影片頁，按分享</p>
+                <p><img src="${window.location.origin}/LotusLightAdmin/Document/Video/1.png" width="100%" /></p>
+                <br /><p style="font-weight:800;">步驟二：選擇嵌入</p>
+                <p><img src="${window.location.origin}/LotusLightAdmin/Document/Video/2.png" width="100%" /></p>
+                <br /><p style="font-weight:800;">步驟三：按複製</p>
+                <p><img src="${window.location.origin}/LotusLightAdmin/Document/Video/3.png" width="100%" /></p>
+    `
+        });
+    });
+    // 重置
+    $(".btnExt").click(() => {
+        $(".btnReset").click();
+        $(".previewImage")[0].src = "#";
+    })
+
+    // 編碼
+    $(".addLinkURL").change((e) => {
+        $("input[name=addMovieURL]").val(btoa(e.target.value));
+    });
+
+    // Tab 切換標籤
+    $('.tabsBlock .tab').on("click", function () {
+        // 先移除所有Tab標籤的-on class，在對點擊的Tab標籤加上-on class
+        $(this).parent().children().removeClass("active");
+        $(this).addClass("active");
+
+        $(".tabsContentsBlock .tabContent").removeClass("active");
+        $(".tabsContentsBlock .tabContent").eq($(this).index()).addClass("active");
+
+        var sn = $(".tab.active").data("sn");
+        var xr = new XMLHttpRequest();
+        xr.open("GET", gettvu + "/" + sn, true);
+        xr.onload = function () {
+            if (this.status === 200) {
+                $(".contentsBlock > .container > .row").html(this.responseText);
+            }
+        };
+        xr.send();
+    });
+
+    // 儲存分類
+    $(".btnSaveGenre").click((e) => {
+        var id = e.target.dataset.sn;
+        var newName = $(e.target.parentElement).find(".editGenre").val().trim();
+        var postData = new FormData();
+        postData.append("editGenre", newName);
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", edttu + "/" + id, true);
+        xhr.onload = function () {
+            var msg = "";
+            if (this.status === 200 && this.responseText.indexOf("OK") > -1) {
+                msg = this.responseText.split(';');
+                var sn = msg.length > 1 ? msg[1] : "";
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: '操作成功',
+                    showConfirmButton: false,
+                    timer: 1000
+                }).then(() => {
+                    $(`.videoTabs .tab[data-sn=${id}] > p`).text(newName);
+                });
+            } else if (this.status === 200 && this.responseText.indexOf("NG") > -1) {
+                msg = this.responseText.split(';');
+                Swal.fire(msg.length > 1 ? msg[1] : "操作失敗");
+            }
+        };
+        xhr.send(postData);
+    });
+
+    // 刪除分類
+    $(".btnDelGenre").click((e) => {
+        Swal.fire({
+            icon: 'warning',
+            title: '確定要刪除嗎?',
+            text: '刪除分類會連影片連結一起刪除，刪除後不可複原，請再次確認是否要刪除？',
+            showConfirmButton: true,
+            showCancelButton: true,
+            confirmButtonText: '確定',
+            cancelButtonText: '取消'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var id = e.target.dataset.sn;
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", deltu + "/" + id, true);
+                xhr.onload = function () {
+                    var msg = "";
+                    if (this.status === 200 && this.responseText.indexOf("OK") > -1) {
+                        msg = this.responseText.split(';');
+                        var sn = msg.length > 1 ? msg[1] : "";
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: '操作成功',
+                            showConfirmButton: false,
+                            timer: 1000
+                        }).then(() => {
+                            $(`.videoTabs .tab[data-sn=${id}]`).remove();
+                            $(`.videoTabsContents .tabContent[data-sn=${id}]`).remove();
+                        });
+                    } else if (this.status === 200 && this.responseText.indexOf("NG") > -1) {
+                        msg = this.responseText.split(';');
+                        Swal.fire(msg.length > 1 ? msg[1] : "操作失敗");
+                    }
+                };
+                xhr.send();
+            }
+        });
+    });
+
+    // 顯示圖片
+    var btnShow = $('.addImage');
+    var previewBlock = $(".previewImageBlock");
+    for (let i = 0; i < btnShow.length; i++) {
+
+        btnShow[i].onchange = function (e) {
+            previewBlock.eq(i).html('');
+            for (let j = 0; j < btnShow[i].files.length; j++) {
+                let readers = new FileReader();
+                readers.onload = function (e) {
+                    var img = $('<img class="previewImage">').attr('src', e.target.result);
+
+                    previewBlock.eq(i).append(img);
+
+
+                };
+                readers.readAsDataURL(btnShow[i].files[j]);
+            }
+        }
+
+        btnShow[i].onclick = function (e) {
+            document.body.onfocus = () => {
+                //if (!e.value.length) 
+                $(btnShow[i]).change();
+                document.body.onfocus = null;
+            }
+        }
+    }
+    // 新增影片
+    $(".btnAdd").click(() => {
+        var sn = $(".tab.active").data("sn");
+        var title = $(".addTitle").val().trim();
+        var lnk = $(".addLinkURL").val().trim();
+
+        if (title.length === 0 || lnk.length === 0) {
+            Swal.fire('請完整填寫所有必填項！');
+        } else {
+
+            var postData = new FormData($("#fmAddVideo")[0]);
+            postData.append("typeid", sn)
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", addu, true);
+            xhr.onload = function () {
+                var msg = "";
+                if (this.status === 200 && this.responseText.indexOf("OK") > -1) {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: '操作成功',
+                        showConfirmButton: false,
+                        timer: 1000
+                    }).then(() => {
+                        $("#exampleModalCenteredScrollable .close").click();
+
+                        var xr = new XMLHttpRequest();
+                        xr.open("GET", gettvu + "/" + sn, true);
+                        xr.onload = function () {
+                            if (this.status === 200) {
+                                $(".contentsBlock > .container > .row").html(this.responseText);
+                            }
+                        };
+                        xr.send();
+
+                    });
+                } else if (this.status === 200 && this.responseText.indexOf("NG") > -1) {
+                    msg = this.responseText.split(';');
+                    Swal.fire(msg.length > 1 ? msg[1] : "操作失敗");
+                }
+            };
+            xhr.send(postData);
+        }
+    })
+</script>
+

@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "友善連結";
+}
+
+<main class="linksPage border">
+    <!-- bannerBlock -->
+    <div class="bannerBlock border">
+        <div class="banner_09 border">
+            <div class="bannerTitleBlock border">
+                <img src="~/assets/img/elements/titleImage/titleImage_11.png" alt="">
+                <p>Links</p>
+            </div>
+        </div>
+        <div class="breadCrumbs border">
+            <ul>
+                <li><a href="@Url.Action("Index","Home")">首頁</a></li>
+                <li class="disPlay"><a href="@Url.Action("FavouriteLink","Home")">友善連結</a></li>
+            </ul>
+        </div>
+    </div>
+    <main class="main">
+        <div class="friendlyLinksBlock border">
+            <div class="friendlyLinkTitleBlock border">
+                <img src="~/assets/img/elements/linkImage.png" alt="">
+                <p class="mainTitle">
+                    連結專區
+                </p>
+            </div>
+            <ul class="friendlyLinks border">
+                @foreach (LotusLight.Models.FavouriteLink item in (List<LotusLight.Models.FavouriteLink>)ViewBag.ObjList)
+                {
+                    <li>
+                        <a href="@item.Link" target="_blank">
+                            @item.Name
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </main>
+</main>

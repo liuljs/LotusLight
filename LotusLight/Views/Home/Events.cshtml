@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "華光事蹟";
+}
+
+<main class="eventsPage border @(ViewBag.Anchor.Substring(0,1) == "N" ? "newsPage" : "eventPage")">
+    <!-- bannerBlock -->
+    <div class="bannerBlock border">
+        <div class="banner_03 border">
+            <div class="bannerTitleBlock border">
+                <img src="~/assets/img/elements/titleImage/titleImage_03.png" alt="">
+                <p>Events</p>
+            </div>
+        </div>
+        <div class="breadCrumbs border">
+            <ul>
+                <li><a href="@Url.Action("Index","Home")">首頁</a></li>
+                <li class="disPlay"><a href="@Url.Action("News","Home")">華光事蹟</a></li>
+            </ul>
+        </div>
+    </div>
+    <main class="main">
+        <div class="eventsTitleBlock border">
+            <p class="mainTitle">華光事蹟</p>
+        </div>
+        <div class="eventsTabsBlock border">
+            <ul class="eventsTabs border">
+                <li class="tabItem border @(ViewBag.Anchor.Substring(0,1) == "N" ? "active" : "")"><a href="javascript:;" class="lnkNews" data-url="@Url.Action("News", "Home")" data-cls="newsPage">最新消息</a></li>
+                <li class="tabItem border @(ViewBag.Anchor.Substring(0,1) == "A" ? "active" : "")"><a href="javascript:;" class="lnkActivity" data-url="@Url.Action("Activity", "Home")" data-cls="eventPage">最新活動</a></li>
+            </ul>
+        </div>
+        <div class="tabsContentsBlock border">
+            <div class="tabContent divEventContent pageControllers">
+                @if (ViewBag.Anchor == "N0")
+                {
+                    Html.RenderAction("News", "Home");
+                }
+                else if (ViewBag.Anchor == "A0")
+                {
+                    Html.RenderAction("Activity", "Home");
+                }
+                else if (ViewBag.Anchor.Substring(0, 1) == "N")
+                {
+                    Html.RenderAction($"GetNews", "Home", new { id = ViewBag.Anchor.Substring(1) });
+                }
+                else
+                {
+                    Html.RenderAction($"GetActivity", "Home", new { id = ViewBag.Anchor.Substring(1) });
+                }
+            </div>
+        </div>
+    </main>
+</main>
+
+@section scripts {
+    
+    <script>
+        var nowPage = 1;
+
+        //var stateObj = { sss: "aaa" };
+        //history.pushState(stateObj, null, "@Url.Action("Events", "Home")");
+        //browser.history.deleteAll();
+
+        $(".lnkNews, .lnkActivity").click((e) => {
+            $(".eventsPage").removeClass("newsPage");
+            $(".eventsPage").removeClass("eventPage");
+            $(".eventsPage").addClass(e.target.dataset.cls);
+
+            $(".tabItem").removeClass("active");
+            $(e.target.parentElement).addClass("active");
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", e.target.dataset.url, true);
+            xhr.onload = function () {
+                if (this.status === 200) {
+                    $(".divEventContent").html(this.responseText);
+                    window.history.replaceState('', '', '/Home/Events');
+                }
+            };
+            xhr.send();
+        });
+    </script>
+}

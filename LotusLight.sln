@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LotusLight", "LotusLight\LotusLight.csproj", "{05114F46-EF3D-45B8-B3AF-430B383B10E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Admin", "Admin\Admin.csproj", "{A33CA18C-028A-4575-8034-20B9F2041139}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{05114F46-EF3D-45B8-B3AF-430B383B10E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05114F46-EF3D-45B8-B3AF-430B383B10E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05114F46-EF3D-45B8-B3AF-430B383B10E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05114F46-EF3D-45B8-B3AF-430B383B10E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A33CA18C-028A-4575-8034-20B9F2041139}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A33CA18C-028A-4575-8034-20B9F2041139}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A33CA18C-028A-4575-8034-20B9F2041139}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A33CA18C-028A-4575-8034-20B9F2041139}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {75699843-B16D-4F85-BD6C-1E8FC6FD4756}
+	EndGlobalSection
+EndGlobal

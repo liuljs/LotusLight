@@ -1,0 +1,190 @@
+﻿<!-- lightBox for donate 一般捐款 -->
+
+<form id="fmDonateForm" method="post" enctype="multipart/form-data">
+
+    <input type="hidden" class="OrderType" value="1" />
+
+    <div class="lightBoxBlock border donateNormal">
+        <div class="lightBox border">
+            <div class="lightBoxContent border">
+                <div class="lightBoxHeader border">
+                    <p class="mainTitle">網路捐款</p>
+                    <div class="cancel border">
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+                <div class="lightBoxBody border">
+                    <div class="fieldBlock radioBlock">
+                        <label for="donateUnit">捐款單位<span class="requiredBlock">必填</span></label>
+                        <div>
+                            <div class="">
+                                <input type="radio" id="donateUnit1" name="donateUnit" value="1" class="donateUnit" checked>
+                                <label class="" for="donateUnit1">個人</label>
+                            </div>
+                            <div class="">
+                                <input type="radio" id="donateUnit2" name="donateUnit" value="2" class="donateUnit">
+                                <label class="" for="donateUnit2">公司</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fieldBlock">
+                        <label class="titleBlock" for="donateTitle">捐款姓名（公司）<span class="requiredBlock">必填</span></label>
+                        <input type="text" class="donateTitle" id="donateTitle" required>
+                    </div>
+                    <div class="fieldBlock">
+                        <label class="titleBlock" for="donateIdNum">身分證號（統編）</label>
+                        <input type="text" class="donateIdNum" id="donateIdNum">
+                    </div>
+                    <div class="fieldBlock">
+                        <label class="titleBlock" for="donateTel">聯絡電話<span class="requiredBlock">（超商繳款請輸入手機號碼、線上刷卡請輸入市話或手機）</span></label>
+                        <input type="text" class="donateTel" id="donateTel" placeholder="範例格式：0912XXXXXX">
+                    </div>
+                    <div class="fieldBlock">
+                        <label class="titleBlock" for="receiptAddress">地址<span class="requiredBlock">必填</span></label>
+                        <div class="addressBlock">
+                            <div class="twZipCode"></div>
+                            <input type="text" class="receiptAddress" id="receiptAddress" placeholder="地址路段（註：海外請直接填此欄位）" required>
+                        </div>
+                    </div>
+                    <div class="fieldBlock">
+                        <label class="titleBlock" for="donateMail">電子信箱</label>
+                        <input type="text" class="donateMail" id="donateMail">
+                    </div>
+                    <div class="fieldBlock selectBlock">
+                        <label for="donateMethods">捐款方式</label>
+                        <div class="">
+                            <select class="donateMethods" id="donateMethods">
+                                <option value="01" selected>線上刷卡〈註：6,000 元（含）以上可分期〉</option>
+                                <option value="2">虛擬帳號</option>
+                                <optgroup label="〈註：超商繳款上限為 20,000 元〉">
+                                    <option value="4">超商代碼(7-11)</option>
+                                    <option value="6">超商代碼(FamilyMart)</option>
+                                    <option value="9">超商代碼(OK)</option>
+                                    <option value="10">超商代碼(萊爾富)</option>
+                                </optgroup>
+                                <option value="83">銀行匯款</option>
+                            </select>
+                            <span class="requiredBlock">必填</span>
+                        </div>
+                    </div>
+                    <div class="fieldBlock selectBlock">
+                        <label for="donateBranch">贈予單位</label>
+                        <div>
+                            <select class="donateBranch" id="donateBranch">
+                                @foreach (LotusLight.Models.Contact item in (List<LotusLight.Models.Contact>)ViewBag.BranchList)
+                                {
+                                    if (!string.IsNullOrEmpty(item.MerchantId) && !string.IsNullOrEmpty(item.TerminalId))
+                                    {
+                                <option value="@item.Sn" data-m-code="@item.MerchantId" data-t-code="@item.TerminalId">@item.Name.Replace("華光功德會", "")</option>
+                                    }
+                                }
+                            </select>
+                            <span class="requiredBlock">必填</span>
+                        </div>
+                    </div>
+                    <div class="fieldBlock">
+                        <label class="titleBlock" for="donateAmount numberz">捐款金額<span class="requiredBlock">必填</span></label>
+                        <input type="number" class="donateAmount numberz" id="donateAmount" value="100" placeholder="單次金額最低 NT$100" min="100">
+                    </div>
+                    <div class="fieldBlock selectBlock stagingBlock"></div>
+                    <div class="fieldBlock selectBlock">
+                        <label for="donatePurpose">捐款用途</label>
+                        <div>
+                            <select class="donatePurpose" id="donatePurpose">
+                                <option value="0" selected>捐贈白米</option>
+                                <option value="1">急難救助</option>
+                                <option value="2">印經善書</option>
+                                <option value="3">一般會員年費月繳</option>
+                                <option value="4">一般會員年費年繳</option>
+                                <option value="5">永久會員(單筆捐款1萬元以上)</option>
+                                <option value="6">兒童節禮物金(每年4月發送)</option>
+                                <option value="7">畢業禮物(每年6月發送)</option>
+                                <option value="8">端午節粽子(每年6月發送)</option>
+                                <option value="9">中秋月餅(每年9月發送)</option>
+                                <option value="10">聖誕禮物(每年12月發送)</option>
+                                <option value="11">圖書捐贈</option>
+                                <option value="12">冬令救濟</option>
+                                <option value="13">慶中秋活動</option>
+                                <option value="14">造橋鋪路</option>
+                                <option value="15">其它</option>
+                            </select>
+                            <span class="requiredBlock">必填</span>
+                        </div>
+                    </div>
+                    <div class="fieldBlock otherPurposeBlock" style="display:none;">
+                        <label class="titleBlock" for="donateAmount">其他捐款用途<span class="requiredBlock">必填</span></label>
+                        <input type="text" class="donateOtherPurpose" placeholder="請填寫用途(20字內)" maxlength="20">
+                    </div>
+                    <div class="fieldBlock radioBlock">
+                        <label for="receipt">是否開收據<span class="requiredBlock">必填</span></label>
+                        <div>
+                            <div class="">
+                                <input type="radio" id="receipt1" name="receipt" value="Y" class="receipt" checked>
+                                <label class="" for="receipt1">是</label>
+                            </div>
+                            <div class="">
+                                <input type="radio" id="receipt2" name="receipt" value="N" class="receipt">
+                                <label class="" for="receipt2">否</label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="fieldBlock addressBlock addReceiptBlock"></div>
+                    <div class="fieldBlock radioBlock">
+                        <label for="public">是否開公開捐款姓名及金額<span class="requiredBlock">必填</span></label>
+                        <div>
+                            <div class="">
+                                <input type="radio" id="public1" name="public" value="Y" class="public" checked>
+                                <label class="" for="public1">是</label>
+                            </div>
+                            <div class="">
+                                <input type="radio" id="public2" name="public" value="N" class="public">
+                                <label class="" for="public2">否</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fieldBlock">
+                        <div class="fieldNotes">
+                            <div class="noteTitleBlock">
+                                <p class="mainTitle">個資法聲明</p>
+                            </div>
+                            <div class="noteContents">
+                                <p>感謝您的愛心捐款，社團法人中國真佛宗華光功德會向您取得之個人資料，包含個人姓名、電話、地址及電子郵件地址等，將僅限使用於本會捐款服務與管理、募款、會務活動等使用，本會遵守個人資料保護法之規定，妥善保護您的個人資訊。於此前提下，您同意本會得於法律許可之範圍內處理及利用相關資料以提供資訊或服務，而您可依法得就您提供的個人資料向本會請求查詢、閱覽、提供複本、補充或更正、停止及刪除。請您於上班時間以電話或傳真與本會聯繫。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lightBoxFooter border">
+                    <div>
+                        <button type="button" class="btn btnReset">重填</button>
+                        <button type="button" class="btn btnSave">送出</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+@Html.Partial("WpssAuth")
+
+@*<form class="fmDonate" action="https://service.payware.com.tw/wpss/authpay.aspx" method="post" target="new_win">
+        <input type="hidden" id="OrderNo" name="OrderNo" />
+        <input type="hidden" id="MerchantId" name="MerchantId" />
+        <input type="hidden" id="TerminalId" name="TerminalId" />
+        <input type="hidden" id="Encoding" name="Encoding" value="utf-8" />
+        <input type="hidden" id="MerchantName" name="MerchantName" />
+        <input type="hidden" id="PayType" name="PayType" />
+        <input type="hidden" id="Amount" name="Amount" />
+        <input type="hidden" id="Mobile" name="Mobile" />
+        <input type="hidden" id="CardHolder" name="CardHolder" />
+        <input type="hidden" id="Product" name="Product" />
+        <input type="hidden" id="Email" name="Email" />
+        <input type="hidden" id="GoBackURL" name="GoBackURL" />
+        <input type="hidden" id="ReturnUrl" name="ReturnUrl" />
+        <input type="hidden" id="ReceiveUrl" name="ReceiveUrl" />
+        <input type="hidden" id="Installment" name="Installment" />
+    </form>*@
+
+<script src="~/assets/js/donates_05.js"></script>

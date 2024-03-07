@@ -1,0 +1,204 @@
+﻿@{
+    ViewBag.Title = "首頁";
+}
+
+<main class="indexPage border">
+    <!-- Carousel Banner -->
+    <div class="embla carousels border">
+        <div class="embla__container carouselAll border">
+            @foreach (LotusLight.Models.Carousel item in (List<LotusLight.Models.Carousel>)ViewBag.CarouselList)
+            {
+                <div class="embla__slide item" data-url="@( !string.IsNullOrEmpty(item.TargetLink) ? $"{item.TargetLink}" : "")" data-target="_blank" style="@( !string.IsNullOrEmpty(item.TargetLink) ? "cursor:pointer !important;" : "")">
+                    <img src="@Url.Action("GetCarouselImage","Act")/@item.Sn" class="RedirectImage" alt="">
+                </div>
+            }
+        </div>
+        <!-- Buttons -->
+        <button class="embla__button embla__button--prev" type="button">
+            <svg class="embla__button__svg" viewBox="137.718 -1.001 366.563 643.999">
+                <path d="M428.36 12.5c16.67-16.67 43.76-16.67 60.42 0 16.67 16.67 16.67 43.76 0 60.42L241.7 320c148.25 148.24 230.61 230.6 247.08 247.08 16.67 16.66 16.67 43.75 0 60.42-16.67 16.66-43.76 16.67-60.42 0-27.72-27.71-249.45-249.37-277.16-277.08a42.308 42.308 0 0 1-12.48-30.34c0-11.1 4.1-22.05 12.48-30.42C206.63 234.23 400.64 40.21 428.36 12.5z">
+                </path>
+            </svg>
+        </button>
+        <button class="embla__button embla__button--next" type="button">
+            <svg class="embla__button__svg" viewBox="0 0 238.003 238.003">
+                <path d="M181.776 107.719L78.705 4.648c-6.198-6.198-16.273-6.198-22.47 0s-6.198 16.273 0 22.47l91.883 91.883-91.883 91.883c-6.198 6.198-6.198 16.273 0 22.47s16.273 6.198 22.47 0l103.071-103.039a15.741 15.741 0 0 0 4.64-11.283c0-4.13-1.526-8.199-4.64-11.313z">
+                </path>
+            </svg>
+        </button>
+    </div>
+    <!-- Dots -->
+    <div class="embla__dots"></div>
+    <main class="main">
+        <section class="section border">
+            <div class="titleBlock border">
+                <img src="~/assets/img/elements/indexTitle_02.png" alt="">
+            </div>
+            <div class="contentsBlock border">
+                @foreach (LotusLight.Models.News item in (List<LotusLight.Models.News>)ViewBag.NewsList)
+                {
+                    <a href="@Url.Action($"Events/N{item.Sn}", "Home")" class="rowItem border">
+                        @*<div class="rowItem border">*@
+                        <div class="rowPart border">
+                            <div class="rowImage">
+                                <img src="@Url.Action($"GetNewsImage/{item.Sn}", "Act")" alt="">
+                            </div>
+                        </div>
+                        <div class="rowPart border">
+                            <div class="rowTitle">
+                                <p class="mainTitle">@item.Title</p>
+                            </div>
+                            <div class="dateBlock">
+                                <p>@item.ArticleDate.ToString("yyyy/MM/dd")</p>
+                            </div>
+                        </div>
+                        @*</div>*@
+                    </a>
+                }
+            </div>
+            <div class="btnBlock">
+                <a href="@Url.Action($"Events/N0","Home")" class="btnFirst">
+                    <div class="contentPart">
+                        <p>了解更多</p>
+                    </div>
+                    <div class="contentPart">
+                        <span class="lineBlock"></span>
+                    </div>
+                </a>
+            </div>
+        </section>
+        <section class="section border">
+            <div class="titleBlock border">
+                <img src="~/assets/img/elements/indexTitle_03.png" alt="">
+            </div>
+            <div class="contentsBlock border">
+                @foreach (LotusLight.Models.Activity item in (List<LotusLight.Models.Activity>)ViewBag.ActivityList)
+                {
+                    <a href="@Url.Action($"Events/A{item.Sn}", "Home")" class="cardItem border">
+                        @*<div class="cardItem border">*@
+                        <div class="cardHeader border">
+                            <div class="contentsImage">
+                                <img src="@Url.Action($"GetActivityImage/{item.Sn}", "Act")" alt="">
+                            </div>
+                        </div>
+                        <div class="cardBody border">
+                            <div class="cardTitle">
+                                <p class="mainTitle">@item.Title</p>
+                            </div>
+                        </div>
+                        <div class="cardFooter border">
+                            <div class="dateBlock">
+                                <p>@item.ArticleDate.ToString("yyyy/MM/dd")</p>
+                            </div>
+                        </div>
+                        @*</div>*@
+                    </a>
+                }
+            </div>
+            <div class="btnBlock">
+                <a href="@Url.Action($"Events/A0","Home")" class="btnFirst">
+                    <div class="contentPart">
+                        <p>了解更多</p>
+                    </div>
+                    <div class="contentPart">
+                        <span class="lineBlock"></span>
+                    </div>
+                </a>
+            </div>
+        </section>
+        <section class="section border">
+            <div class="titleBlock border">
+                <img src="~/assets/img/elements/indexTitle_01.png" alt="">
+            </div>
+            <div class="contentsBlock border">
+                <div class="contentPart border">
+                    <div class="contentsImageBlock border">
+                        <div class="contentsImage border">
+                            <img src="~/assets/img/elements/materialImage_01.jpg" alt="">
+                        </div>
+                        <div class="contentsImage border">
+                            <div><img src="~/assets/img/elements/materialImage_02.jpg" alt=""></div>
+                            <div><img src="~/assets/img/elements/materialImage_03.jpg" alt=""></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contentPart border">
+                    <div class="contentsTextBlock">
+                        <p>
+                            <span>華光</span>功德會是實際地做善事，以務實的方式實踐佛法的理論。希望能藉各地華光功德會之成立，集眾人之力量，不爲自己，只爲眾生，依慈悲喜捨四無量心，朝醫療、社會救濟、教育、文化等四大志業及臨終關懷，展開全面性濟世度眾之重任。
+                        </p>
+                        <p>
+                            台灣區華光功德會由台灣區會員組織之，於民國1995年7月11日由內政部奉准正式成立，定名為「中國真佛宗華光功德會」，並於1996年2月向內政部登記為「社團法人中國真佛宗華光功德會」。
+                        </p>
+                        <p>華光功德會會員之招收和救濟對象，無地域、種族、宗教、年齡、性別之分別，是務實行善，實踐佛陀無緣大慈、同體大悲理念的慈善團體。</p>
+                        <p>每一位華光人均以慈悲為懷，務實行善，積極救世濟眾，打造一片人間淨土為最終目的。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="btnBlock">
+                <a href="@Url.Action("About","Home")" class="btnFirst">
+                    <div class="contentPart">
+                        <p>了解更多</p>
+                    </div>
+                    <div class="contentPart">
+                        <span class="lineBlock"></span>
+                    </div>
+                </a>
+            </div>
+        </section>
+        <section class="section border">
+            <div class="contentsBlock border">
+                <div class="contentPart border">
+                    <div class="contentsImage">
+                        <img src="~/assets/img/elements/materialImage_04.jpg" alt="">
+                    </div>
+                </div>
+                <div class="contentPart border">
+                    <div class="contentTextBlock">
+                        <div class="titleBlock">
+                            <img src="~/assets/img/elements/indexTitle_04.png" alt="">
+                        </div>
+                        <span class="lineBlock"></span>
+                        <div class="contentText">
+                            <p>因為您的支持，華光功德會得以推動醫療、教育、文化等四大志業及臨終關懷專案，積極展開全面性濟世度眾之重任。</p>
+                            <p>華光珍惜您的善念與願力，與您合力轉動這世界善的法輪，讓愛遍灑大地，潤澤所有需要幫助的人。</p>
+                        </div>
+                        <div class="btnBlock centerBlock">
+                            <a href="#" class="btnDonate">
+                                <div class="contentPart">
+                                    <p>網路捐款</p>
+                                </div>
+                                <div class="contentPart">
+                                    <img src="~/assets/img/elements/donateImage.png" alt="">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        @Html.Partial("DonateBox")
+    </main>
+</main>
+
+@section scripts {
+    <script src="~/assets/js/carousel.js"></script>
+    <script src="~/assets/js/donate.js"></script>
+    <script>
+        //$(document).ready(() => {
+        //    $(".item").click(function () {
+        //        var url = $(this).data("url");
+        //        if (url.trim().length > 0) {
+        //            //document.location.href = url;
+        //            window.open(url, '_blank');
+        //        }
+        //    });
+        //});
+
+        $(document).ready(function ($) {
+            $(".item").click(function () {
+                window.open($(this).data("url"), $(this).data("target"));
+            });
+        });
+    </script>
+}

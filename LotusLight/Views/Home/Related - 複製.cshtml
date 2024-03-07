@@ -1,0 +1,313 @@
+﻿
+@{
+    ViewBag.Title = "結緣捐贈";
+}
+
+<main class="relatedPage border">
+    <!-- bannerBlock -->
+    <div class="bannerBlock border">
+        <div class="banner_05 border">
+            <div class="bannerTitleBlock border">
+                <img src="~/assets/img/elements/titleImage/titleImage_05.png" alt="">
+                <p>Presents</p>
+            </div>
+        </div>
+        <div class="breadCrumbs border">
+            <ul>
+                <li><a href="@Url.Action("Index","Home")">首頁</a></li>
+                <li class="disPlay"><a href="@Url.Action("Related","Home")">結緣捐贈</a></li>
+            </ul>
+        </div>
+    </div>
+    <main class="main">
+        <div class="relatedContentBlock border">
+            <div class="relatedTitleBlock border">
+                <p class="mainTitle">緣傳千里-日月星開運印章、貴人多助筆、蓮生佛水瓶</p>
+            </div>
+            <div class="relatedContents border">
+                <p>感恩各位師兄姐及十方善信大德一直以來的慈善善舉，華光功德會除寒暑假每月發送愛心物資給全台 1,500 名華光小天使外，更配合兒童節、端午節、畢業季、中秋節，聖誕節等各式節日發送禮品給華光小天使感受節慶溫馨氣氛。亦固定籌辦關懷弱勢邊緣戶的活動，提供節日禮品、愛心物資及義診，義剪和整骨等服務。因為有您對我們的關懷與陪伴，我們才能幫助更多孩子以及弱勢家庭。</p>
+                <p>聖尊蓮生活佛特賜給華光功德會「日月星敕令」佛旨福印做為開運印章、「貴人多助筆」、「招財進寶筆」以及「蓮生佛水瓶」來賜福所有贊助的功德主。</p>
+            </div>
+        </div>
+        <div class="relatedContentBlock border">
+            <div class="relatedTitleBlock border">
+                <p class="mainTitle">
+                    2021年蓮生活佛賜予招財符 -牛年招財轉乾坤、活佛賜福盈滿年
+                </p>
+            </div>
+            <div class="relatedContents border">
+                <p>
+                    華光功德會是實際地做善事，以務實的方式實踐佛法的慈善團體。集眾人之力量， 不爲自己，只爲眾生，依慈悲喜捨四無量心，朝醫療、社會救濟、教育、文化等 四大志業及臨終關懷專案，積極展開全面性濟世度眾之重任。華光珍惜您的善念 與願力，與您合力轉動這世界善的法輪，讓愛遍撒大地，潤澤所有需要幫助的人。 感恩華光功德會創辦人根本傳承上師聖尊蓮生活佛，特別慈悲賜予「招財符」以 回饋捐助善款之善信大德，共有四種方案，皆具實用且蘊含強大加持力之招財聖 物，機會難得敬請把握！
+                </p>
+            </div>
+        </div>
+        <div class="relatedCards border">
+
+            @foreach (LotusLight.Models.Related item in (List<LotusLight.Models.Related>)ViewBag.ObjList)
+            {
+                <div class="cardItem border">
+                    <div class="cardHeader border">
+                        <div class="cardImage border btnPreview">
+                            <img src="@Url.Action("GetRelatedImage","Act")/@item.Sn" alt="">
+                        </div>
+                        <div class="cardDescript border">
+                            <p>（點擊圖片放大）</p>
+                        </div>
+                    </div>
+                    <div class="cardBody border">
+                        <div class="cardTitle border">
+                            <p class="mainTitle">
+                                捐款 @item.Amount.ToString("#,###") 元贈送 @item.Title
+                            </p>
+                        </div>
+                        <div class="cardContents border">
+                            @if (!string.IsNullOrEmpty(item.P1))
+                            {
+                                <p>@item.P1</p>
+                            }
+                            @if (!string.IsNullOrEmpty(item.P2))
+                            {
+                                <p>@item.P2</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <input type="hidden" class="OrderType" value="2" />
+        <div class="relatedTablesBlock border">
+            <div class="contentPart border">
+                <div class="titleBLock"><p class="mainTitle">我要捐款</p></div>
+                <div class="relatedForms border">
+                    <div class="formsBody border">
+                        <div class="fieldBlock radioBlock">
+                            <label for="relatedUnit">捐款單位</label>
+                            <div class="">
+                                <input type="radio" id="relatedUnit1" name="relatedUnit" value="1" class="relatedUnit" checked>
+                                <label class="" for="relatedUnit1">個人</label>
+                            </div>
+                            <div class="">
+                                <input type="radio" id="relatedUnit2" name="relatedUnit" value="2" class="relatedUnit">
+                                <label class="" for="relatedUnit2">公司</label>
+                            </div>
+                            <span class="requiredBlock">必填</span>
+                        </div>
+                        <div class="fieldBlock">
+                            <label class="titleBlock" for="relatedTitle">捐款姓名（公司）<span class="requiredBlock">必填</span></label>
+                            <input type="text" class="relatedTitle" id="relatedTitle">
+                        </div>
+                        <div class="fieldBlock">
+                            <label class="titleBlock" for="relatedIdNum">身分證號（統編）</label>
+                            <input type="text" class="relatedIdNum" id="relatedIdNum">
+                        </div>
+                        <div class="fieldBlock">
+                            <label class="titleBlock" for="relatedTel">聯絡電話<span class="requiredBlock">超商繳款請輸入手機號碼</span></label>
+                            <input type="text" class="relatedTel" id="relatedTel" placeholder="09xxxxxxxx">
+                        </div>
+                        <div class="fieldBlock">
+                            <label class="titleBlock" for="relatedMail">電子信箱</label>
+                            <input type="text" class="relatedMail" id="relatedMail">
+                        </div>
+                        <div class="fieldBlock">
+                            <table class="relatedList border">
+                                <tr>
+                                    <th>結緣方式<span class="requiredBlock">必填</span></th>
+                                    <th>數量<span class="requiredBlock">必填</span></th>
+                                    <th class="rightBlock width20">價格</th>
+                                </tr>
+                                @foreach (LotusLight.Models.Related item in (List<LotusLight.Models.Related>)ViewBag.ObjList)
+                                {
+                                    <tr class="relatedGoods">
+                                        <td>
+                                            <p>捐款 @item.Amount.ToString("#,###") 元贈送 @item.Title</p>
+                                            @if (!string.IsNullOrEmpty(item.Notes))
+                                            {
+                                                <span class="requiredBlock">（@item.Notes）</span>
+                                            }
+                                            <input type="hidden" class="sinPrice" value="@item.Amount">
+                                        </td>
+                                        <td><input type="number" data-name="@item.Title" class="quantities rightBlock" value="0" min="0"></td>
+                                        <td class="rightBlock"><p class="price"></p></td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                        <div class="fieldBlock selectBlock">
+                            <label for="relatedMethods">捐款方式</label>
+                            <div class="ssssssss">
+                                <select class="donateMethods" id="donateMethods">
+                                    <option value="01" selected>線上刷卡〈註：6,000 元（含）以上可分期〉</option>
+                                    <option value="2">虛擬帳號</option>
+                                    <optgroup label="〈註：超商繳款上限為 20,000 元〉" class="storePay">
+                                        <option value="4">超商代碼(7-11)</option>
+                                        <option value="6">超商代碼(FamilyMart)</option>
+                                        <option value="9">超商代碼(OK)</option>
+                                        <option value="10">超商代碼(萊爾富)</option>
+                                    </optgroup>
+                                    <option value="83">銀行匯款</option>
+                                </select>
+
+                                <span class="requiredBlock">必填</span>
+                            </div>
+                        </div>
+                        <div class="fieldBlock selectBlock stagingBlock"></div>
+                        <div class="fieldBlock selectBlock">
+                            <label for="relatedBranch">贈予單位</label>
+                            <div>
+                                <select class="relatedBranch" id="relatedBranch">
+                                    @foreach (LotusLight.Models.Contact item in (List<LotusLight.Models.Contact>)ViewBag.BranchList)
+                                    {
+                                        if (!string.IsNullOrEmpty(item.MerchantId) && !string.IsNullOrEmpty(item.TerminalId))
+                                        {
+                                            <option value="@item.Sn" data-m-code="@item.MerchantId" data-t-code="@item.TerminalId">@item.Name.Replace("華光功德會", "")</option>
+                                        }
+                                    }
+                                </select>
+                                <span class="requiredBlock">必填</span>
+                            </div>
+                        </div>
+                        <div class="fieldBlock selectBlock">
+                            <label for="relatedPicks">取貨方式</label>
+                            <div class="">
+                                <select class="relatedPicks" id="relatedPicks">
+                                    <option value="0" selected>取貨方式</option>
+                                    <optgroup label="寄送（選擇寄送方式及填寫備註）">
+                                        <option value="1">新竹物流寄送(運費100元)</option>
+                                        <option value="2">超商店到店(運費60元)</option>
+                                    </optgroup>
+                                    <optgroup label="面交（選擇地點及電話聯繫約定時間）">
+                                        <option value="3">約定時間至台灣雷藏寺面交</option>
+                                        <option value="4">各分會的辦公室面交</option>
+                                    </optgroup>
+                                </select>
+                                <span class="requiredBlock">必填</span>
+                            </div>
+                        </div>
+                        <div class="fieldBlock shippingMethods"></div>
+                    </div>
+                    <div class="formsFooter border">
+                        <div class="totalBlock border">
+                            <div class="contentPart border">
+                                <div class="totalQuantityBlock border">
+                                    <p>共<span class="totalQuantities">0</span>件</p>
+                                </div>
+                                <div class="totalAmountBlock border">
+                                    <p>結緣金額<span class="amounts"></span></p>
+                                </div>
+                            </div>
+                            <div class="contentPart border">
+                                <div class="totalShippingFeeBlock border">
+                                    <p>運費<span class="fees"></span></p>
+                                </div>
+                            </div>
+                            <div class="contentPart border">
+                                <div class="totalFeeBlock border">
+                                    <p>總計<span class="unit">NT$ </span><span class="totals">0</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btnBlock centerBlock">
+                            <a href="" class="btnDonate">
+                                <div class="contentPart">
+                                    <p>結緣捐款</p>
+                                </div>
+                                <div class="contentPart">
+                                    <img src="~/assets/img/elements/donateImage.png" alt="">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="contentPart border">
+                <div class="titleBLock"><p class="mainTitle">備註說明</p></div>
+                <div class="relatedNotes border">
+                    <div class="notesTitleBlock">
+                        <p class="mainTitle">國外同門若需結緣品，可以聯絡以下兩位同門「Kenneth Ng」、「Tan Tina」</p>
+                    </div>
+                    <div class="notesContents border">
+                        <p>因寄國外運費較貴，華光功德會有寄放一些結緣品在馬來西亞Kenneth Ng師兄處，如住在鄰近馬來西亞的同門可以聯絡Kenneth Ng現場拿貨或詳談寄送事宜。</p>
+                        <p>非常感謝Kenneth Ng 師兄、Tan Tina 師姐發心幫功德會募款，花費很多時間及精神，沒有賺錢，純義務推廣師尊賜給華光的結緣品，希望同門都得到師佛的加持，同門或有需要者，請就近聯絡 Kenneth Ng 師兄、Tan Tina 師姐，謝謝。</p>
+                    </div>
+                </div>
+                <div class="relatedNotes border">
+                    <div class="notesTitleBlock">
+                        <p class="mainTitle">個資法聲明</p>
+                    </div>
+                    <div class="notesContents border">
+                        <p>感謝您的愛心捐款，社團法人中國真佛宗華光功德會向您取得之個人資料，包含個人姓名、電話、地址及電子郵件地址等，將僅限使用於本會捐款服務與管理、募款、會務活動等使用，本會遵守個人資料保護法之規定，妥善保護您的個人資訊。</p>
+                        <p>於此前提下，您同意本會得於法律許可之範圍內處理及利用相關資料以提供資訊或服務，而您可依法得就您提供的個人資料向本會請求查詢、閱覽、提供複本、補充或更正、停止及刪除。請您於上班時間以電話或傳真與本會聯繫。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="contentPart border">
+                <div class="titleBLock"><p class="mainTitle">聯絡方式（台灣）</p></div>
+                <div class="contactsBlock border">
+                    @foreach (LotusLight.Models.Contact item in (List<LotusLight.Models.Contact>)ViewBag.BranchList)
+                    {
+                        if (!string.IsNullOrEmpty(item.Address))
+                        {
+                            <div class="contactItem border">
+                                <div class="itemHeader">
+                                    <div class="itemTitleBlock">
+                                        <p class="mainTitle">@item.Name</p>
+                                    </div>
+                                </div>
+                                <div class="itemBody">
+                                    <p>地址：@item.Address</p>
+                                    <p><span>TEL：@item.Tel</span><span class="dividerBlock"></span><span>FAX：@item.Fax</span></p>
+                                    @if (!string.IsNullOrEmpty(item.FbLink))
+                                    {
+                                        <a href="@item.FbLink"><img src="~/assets/img/elements/fbImage_01.png" alt="">臉書粉絲團</a>
+                                    }
+                                </div>
+                                <div class="itemFooter">
+                                    <div class="mapBlock border">
+                                        @Html.Raw(item.GoogleMap)
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="lightBoxImageBlock border">
+            <div class="lightBoxImages">
+                <div class="lightBoxBody">
+                    <div class="lightBoxImage">
+                        <img src="" alt="">
+                    </div>
+                </div>
+                <div class="lightBoxFooter">
+                    <div class="cancel">
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</main>
+
+@Html.Partial("WpssAuth")
+
+@*<form class="fmDonate" action="https://test.payware.com.tw/wpss/authpay.aspx" method="post" target="new_win">
+        <input type="hidden" id="OrderNo" name="OrderNo" />
+        <input type="hidden" id="MerchantId" name="MerchantId" />
+        <input type="hidden" id="TerminalId" name="TerminalId" />
+        <input type="hidden" id="Encoding" name="Encoding" value="utf-8" />
+        <input type="hidden" id="MerchantName" name="MerchantName" />
+        <input type="hidden" id="PayType" name="PayType" />
+        <input type="hidden" id="Amount" name="Amount" />
+        <input type="hidden" id="Mobile" name="Mobile" />
+        <input type="hidden" id="CardHolder" name="CardHolder" />
+        <input type="hidden" id="Product" name="Product" />
+        <input type="hidden" id="Email" name="Email" />
+        <input type="hidden" id="GoBackURL" name="GoBackURL" />
+        <input type="hidden" id="ReturnUrl" name="ReturnUrl" />
+        <input type="hidden" id="ReceiveUrl" name="ReceiveUrl" />
+        <input type="hidden" id="Installment" name="Installment" />
+    </form>*@
+
+<script src="~/assets/js/related.js"></script>

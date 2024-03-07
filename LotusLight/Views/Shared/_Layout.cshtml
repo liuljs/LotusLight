@@ -1,0 +1,300 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>華光功德會｜@ViewBag.Title</title>
+    <link rel="icon" href="~/assets/img/elements/ivcon.png" />
+    @*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">*@
+    <link rel="stylesheet" type="text/css" href="  https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    @*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/rowreorder/1.2.7/css/rowReorder.dataTables.min.css">*@
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/rowreorder/1.2.8/css/rowReorder.dataTables.min.css">
+    @*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.6/css/responsive.dataTables.min.css">*@
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" href="~/assets/css/page_06.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+        // 判斷是否為 LINE 內建瀏覽器
+        if (navigator.userAgent.indexOf("Line") > -1) {
+            location.href = window.location.href + "?" + "openExternalBrowser=1";
+        };
+    </script>
+</head>
+
+<body>
+    <div class="wrap border">
+        <div class="container border">
+            <div class="hamburger hamburger--squeeze">
+                <div class="hamburger-box">
+                    <div class="hamburger-inner"></div>
+                </div>
+            </div>
+            <header class="header">
+                <div class="navBlock">
+                    <h1 class="logo">
+                        <a href="@Url.Action("Index","Home")">
+                            <img src="~/assets/img/elements/huaGuangLogo_01.png" alt="">
+                        </a>
+                    </h1>
+                    <nav class="nav hoverStyle">
+                        <ul>
+                            <li class=""><a href="@Url.Action("About","Home")"><span class="circle"></span>認識華光</a></li>
+                            <li class=""><a href="@Url.Action("Service","Home")"><span class="circle"></span>華光服務</a></li>
+                            <li class=""><a href="@Url.Action("Events","Home")"><span class="circle"></span>華光事蹟</a></li>
+                            <li class=""><a href="@Url.Action("Donate","Home")"><span class="circle"></span>我要捐款</a></li>
+                            <li class=""><a href="@Url.Action("Related","Home")"><span class="circle"></span>結緣捐贈</a></li>
+                            <li class=""><a href="@Url.Action("Recruit","Home")"><span class="circle"></span>華光招募</a></li>
+                            <li class=""><a href="@Url.Action("Video","Home")"><span class="circle"></span>影音專區</a></li>
+                            <li class=""><a href="@Url.Action("Contact","Home")"><span class="circle"></span>聯絡我們</a></li>
+                        </ul>
+                        <div class="fbLinkBlock">
+                            <a href="https://www.facebook.com/lotuslight65" target="_blank">
+                                <img src="~/assets/img/elements/fbImage_02.png" alt="">
+                            </a>
+                        </div>
+                    </nav>
+                    <div class="bottomBlock">
+                        <div class="transformBlock">
+                        </div>
+                        <a class="btnSearch" href="@Url.Action("Donations","Home")">
+                            <div class="">
+                                善捐查詢
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </header>
+            <header class="phoneHeader">
+                <div class="navBlock">
+                    <h1 class="logo">
+                        <a href="@Url.Action("Index","Home")">
+                            <img src="~/assets/img/elements/huaGuangLogo_01.png" alt="">
+                        </a>
+                    </h1>
+                    <nav class="nav hoverStyle">
+                        <ul>
+                            <li class=""><a href="@Url.Action("About","Home")"><span class="circle"></span>認識華光</a></li>
+                            <li class=""><a href="@Url.Action("Service","Home")"><span class="circle"></span>華光服務</a></li>
+                            <li class=""><a href="@Url.Action("Events","Home")"><span class="circle"></span>華光事蹟</a></li>
+                            <li class=""><a href="@Url.Action("Donate","Home")"><span class="circle"></span>我要捐款</a></li>
+                            <li class=""><a href="@Url.Action("Related","Home")"><span class="circle"></span>結緣捐贈</a></li>
+                            <li class=""><a href="@Url.Action("Recruit","Home")"><span class="circle"></span>華光招募</a></li>
+                            <li class=""><a href="@Url.Action("Video","Home")"><span class="circle"></span>影音專區</a></li>
+                            <li class=""><a href="@Url.Action("Contact","Home")"><span class="circle"></span>聯絡我們</a></li>
+                        </ul>
+                        <div class="fbLinkBlock">
+                            <a href="https://www.facebook.com/lotuslight65" target="_blank">
+                                <img src="~/assets/img/elements/fbImage_02.png" alt="">
+                            </a>
+                        </div>
+                    </nav>
+                    <!--沒有的功能先不放-->
+                    <div class="bottomBlock">
+                        <div class="transformBlock">
+                        </div>
+                        <a class="btnSearch" href="@Url.Action("Donations","Home")">
+                            <div class="">
+                                善捐查詢
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </header>
+            @RenderBody()
+
+        </div>
+        <footer class="footer">
+            <div class="btnSideBlock">
+                <a href="@Url.Action("Donate","Home")" class="btn">我要捐款</a>
+                <a href="@Url.Action("Recruit","Home")" class="btn">加入華光</a>
+            </div>
+            <div class="btnGoTop">
+                <div class="contentPart">
+                    <p>回頂端</p>
+                </div>
+                <div class="contentPart">
+                    <span class="lineBlock"></span>
+                </div>
+            </div>
+            <div class="footerInfo">
+                <div class="contentPart">
+                    <div class="headOfficeBlock">
+                        <div class="contentHeader">
+                            <p class="mainTitle">社團法人</p>
+                            <img src="~/assets/img/elements/huaGuangName.png" alt="">
+                            <p class="subTitle">內政部立案字號：台內社字第8434202號</p>
+                        </div>
+                        <div class="contentBody">
+
+                            @foreach (LotusLight.Models.Contact item in (List<LotusLight.Models.Contact>)ViewBag.BranchList)
+                            {
+                                if (item.MerchantId.Equals("990005775"))
+                                {
+                                    <p>@item.Address</p>
+                                    <p><span>TEL：@item.Tel</span><span class="dividerBlock"></span><span>FAX：@item.Fax</span></p>
+                                    <a href="@item.FbLink" target="_blank">
+                                        <img src="~/assets/img/elements/fbImage_01.png" alt="">
+                                        總會粉絲團
+                                    </a>
+                                }
+                            }
+
+                        </div>
+                        <div class="contentFooter">
+                            <ul>
+                                <li><a href="@Url.Action("FavouriteLink","Home")">友善連結</a></li>
+                                <li><a href="@Url.Action("Download","Home")">下載專區</a></li>
+                                <li><a class="btnOpen">訂閱電子報</a></li>
+                            </ul>
+                            <div class="messageBoxBlock border">
+                                <div class="boxHeader border">
+                                    <div class="boxTitleBlock">
+                                        <p class="mainTitle">訂閱華光電子報</p>
+                                    </div>
+                                    <div class="cancel border">
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                </div>
+                                <div class="boxBody border">
+                                    <label for="subMmail">您的信箱</label>
+                                    <div>
+                                        <input type="text" name="subMmail" id="subMmail">
+                                        <div class="btnSub">訂閱</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contentPart">
+                    <div class="branchBlock">
+                        @foreach (LotusLight.Models.Contact item in (List<LotusLight.Models.Contact>)ViewBag.BranchList)
+                        {
+                            if (item.MerchantId.Equals("990005790") || item.MerchantId.Equals("990005805"))
+                            {
+                                <div class="branchItem">
+                                    <div class="contentHeader">
+                                        <p>@item.Name.Replace("國內捐款-", "")</p>
+                                        <span class="bottomLineBlock"></span>
+                                    </div>
+                                    <div class="contentBody">
+                                        <p>@item.Address</p>
+                                        <p><span>TEL：@item.Tel</span><span class="dividerBlock"></span><span>FAX：@item.Fax</span></p>
+                                        <a href="@item.FbLink" target="_blank">
+                                            <img src="~/assets/img/elements/fbImage_01.png" alt="">
+                                            FB粉絲團
+                                        </a>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="footerBottom">
+                <p><span>© 2020 Lotus Light Charity Society (Taiwan)</span><span>All Rights Reserved.</span></p>
+                <img src="~/assets/img/elements/huaGuangLogo_02.png" alt="">
+            </div>
+        </footer>
+        @*<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>*@
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+        @*<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/rowreorder/1.2.7/js/dataTables.rowReorder.min.js"></script>*@
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/rowreorder/1.2.8/js/dataTables.rowReorder.min.js"></script>
+        @*<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/2.2.6/js/dataTables.responsive.min.js"></script>*@
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
+        <script src="https://unpkg.com/embla-carousel/embla-carousel.umd.js"></script>
+        <script src="~/assets/js/common_07.js"></script>
+        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+        <script>
+            $(document).ready(function () {
+                var table = $('#donations').DataTable({
+                    "processing": false,
+                    "serverSide": true,
+                    //"deferLoading": 0,
+                    "ajax": {
+                        "url": "@Url.Action("GetDonations", "Act")" ,  // Act/GetDonations要抓哪個地方的資料
+                        "type": "POST", //使用什麼方式抓
+                        "dataType": 'json', //回傳資料的類型
+                        "data": function (d) {
+                            d.Name = $('#Name').val();
+                            d.DonateFor = $('#DonateFor').val();
+                            d.PayDate = $('#PayDate').val();
+                            d.Amount = $('#Amount').val();
+                            //d.Name = $("input[name=Name").val();
+                            //d.DonateFor = $("input[name=DonateFor").val();
+                            //d.PayDate = $("input[name=PayDate").val();
+                            //d.Amount = $("input[name=Amount").val();
+                        }
+                    },
+                    "columns": [
+                        { "data": "Name" },
+                        { "data": "DonateFor" },
+                        {
+                            "data": "PayDate",
+                            "render": function (data, type, row, meta) {
+                                return data.substr(0, 4) + '/' + data.substr(5, 2) + '/' + data.substr(8, 2);
+                            }
+                        },
+                        { "data": "Amount" }
+                    ],
+
+                    "ordering": false,  //禁止排序
+                    //"order": [[2, "desc"]],  //跟陣列下標一樣，第一列從0開始，這裡表格初始化時，捐款時間第3列預設降序
+                    //"columnDefs": [
+                    //    {
+                    //        "targets": [0],
+                    //        "visible": true,
+                    //        "searchable": true
+                    //    },
+                    //    {
+                    //        "targets": [1],
+                    //        "visible": true,
+                    //        "searchable": false
+                    //    },
+                    //    {
+                    //        "targets": [2],
+                    //        "visible": true,
+                    //        "searchable": false
+                    //    },
+                    //    {
+                    //        "targets": [3],
+                    //        "visible": true,
+                    //        "searchable": false
+                    //    }
+                    //],
+                    //responsive: true,
+                    "info": false,
+                    //"lengthChange": false,  //每頁筆數選擇
+                    //"lengthMenu": [10, 25, 50, 75, 100, 200],  //設定每頁筆數選擇
+                    //"pageLength": 10,
+                    //"sPaginationType": "simple_numbers",  //分頁的型式full_numbers
+                    //"destroy": true,
+                    "bPaginate": false, // 顯示換頁
+                    "language": {
+                        //"paginate": {
+                            //"processing": "處理中...",
+                            //"loadingRecords": "載入中...",
+                            //"lengthMenu": "顯示 _MENU_ 項結果",
+                            //"info": "顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項",
+                            //"first": "第一頁",
+                            //"last": "最後一頁",
+                            //"next": "下一頁",
+                            //"previous": "上一頁"
+                        //},
+                        "search": "善捐查詢",
+                        "zeroRecords": "請輸入姓名查詢"
+                    }
+                });
+
+            });
+        </script>
+    </div>
+
+    @RenderSection("scripts", required: false)
+</body>
+
+</html>

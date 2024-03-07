@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewBag.Title = "影片管理";
+}
+
+<main class="col-md-10">
+    <div class="contentTitleBlock">
+        <h2>影片管理</h2>
+        <div>
+            <input type="text" class="form-control addGenre" id="addGenre" name="addGenre" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="分類名稱(必填，50字內)" maxlength="50" required>
+            <button type="button" class="btn btn-outline-secondary btnAddGenre">新增分類</button>
+        </div>
+    </div>
+    <div class="tabsBlock videoTabs">
+        @{Html.RenderAction("VideoTypeTab", "Act", new { id = "0" });}
+    </div>
+    <div class="tabsContentsBlock videoTabsContents">
+        @{Html.RenderAction("VideoTypeTabContent", "Act", new { id = "0" });}
+    </div>
+</main>
+
+@section scripts {
+    <script>
+        var addtu = "@Url.Action("AddVideoType", "Act")";
+        var edttu = "@Url.Action("EditVideoType", "Act")";
+        var deltu = "@Url.Action("DeleteVideoType", "Act")";
+
+        var addu = "@Url.Action("AddVideo", "Act")";
+        var edtu = "@Url.Action("EditVideo", "Act")";
+        var delu = "@Url.Action("DeleteVideo", "Act")";
+
+        var getttu = "@Url.Action("VideoTypeTab", "Act")";
+        var gettcu = "@Url.Action("VideoTypeTabContent", "Act")";
+        var gettvu = "@Url.Action("VideoBlock", "Act")";
+
+        $(document).ready(() => {
+            $(".videoTabs .tab").eq(0).click();
+        });
+
+        // 純實作，避免common js報錯，實際的刪除是在 VideoBlock 內動態註冊
+        function Delete(e) { }
+
+        // 新增分類
+        $(".btnAddGenre").click(() => {
+            var name = $(".addGenre").val().trim();
+            if (name.length > 0) {
+                var postData = new FormData();
+                postData.append("addGenre", name);
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", addtu, true);
+                xhr.onload = function () {
+                    var msg = "";
+                    if (this.status === 200 && this.responseText.indexOf("OK") > -1) {
+                        msg = this.responseText.split(';');
+                        var sn = msg.length > 1 ? msg[1] : "";
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: '操作成功',
+                            showConfirmButton: false,
+                            timer: 1000
+                        }).then(() => {
+
+                            var xr = new XMLHttpRequest();
+                            xr.open("GET", getttu + "/" + sn, true);
+                            xr.onload = function () {
+                                if (this.status === 200) {
+                                    $(".videoTabs").html(this.responseText);
+
+                                    var xr2 = new XMLHttpRequest();
+                                    xr2.open("GET", gettcu + "/" + sn, true);
+                                    xr2.onload = function () {
+                                        if (this.status === 200) {
+                                            $(".videoTabsContents").html(this.responseText);
+                                        }
+                                    };
+                                    xr2.send();
+                                }
+                            };
+                            xr.send();
+                        });
+                    } else if (this.status === 200 && this.responseText.indexOf("NG") > -1) {
+                        msg = this.responseText.split(';');
+                        Swal.fire(msg.length > 1 ? msg[1] : "操作失敗");
+                    }
+
+                };
+                xhr.send(postData);
+            } else {
+                Swal.fire('請輸入分類名稱！');
+            }
+        });
+    </script>
+}

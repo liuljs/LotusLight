@@ -1,0 +1,96 @@
+﻿@{
+    ViewBag.Title = "輪播管理";
+}
+
+<main class="col-md-10">
+    <h2>@ViewBag.Title</h2>
+    <div class="carouselsContent">
+        <div class="titleBlock">
+            <h3>輪播圖片設定</h3>
+            <button type="button" class="btn btn-light btnExt" data-toggle="modal"
+                    data-target="#exampleModalCenteredScrollable">
+                新增圖片
+            </button>
+        </div>
+        <!-- Modal -->
+        <form id="fmCarousel" action="@Url.Action("AddCarousel", "Act")" method="post" enctype="multipart/form-data">
+            <div class="modal fade" id="exampleModalCenteredScrollable" tabindex="-1"
+                 aria-labelledby="exampleModalCenteredScrollable" aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">新增輪播圖片</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body addFormBlock">
+                            <div>
+                                <label for="addTitleImage">輪播圖片(圖片寬高建議：1560 X 890 像素)</label>
+                                <div>
+                                    <div class="custom-file">
+                                        <input type="file" name="titleImage" id="file" class="custom-file-input addImage" required>
+                                        <label class="custom-file-label" for="file" aria-describedby="inputGroupFileAddon02">
+                                            上傳圖片
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="previewImageBlock">
+                                    @*<img class="previewImage" src="#" alt="">*@
+                                </div>
+                            </div>
+                            <div>
+                                <label for="addLinkURL">超連結節點</label>
+                                <input type="text" class="form-control addLinkURL" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="addLinkURL" name="addLinkURL">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="reset" form="" class="btn btn-secondary btnReset">重填</button>
+                            <button type="submit" class="btn btn-primary btnAdd">新增</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="contentsBlock">
+            <div class="container">
+                <div class="row">
+                    @foreach (Admin.Models.Carousel item in (List<Admin.Models.Carousel>)ViewBag.ObjList)
+                    {
+                        <div class="col-md-4 cards">
+                            <div class="card mb-4 shadow-sm">
+                                <img src="~/Mime/Carousel/@item.ImgName" class="card-img-top" alt="">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <div class="sortBlock">
+                                            <p class="cardsTitle">排序</p>
+                                            <input type="text" class="form-control editSort" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="@item.Sort">
+                                        </div>
+                                        <div>
+                                            <p class="cardsTitle">超連結節點</p>
+                                            <input type="text" class="form-control editLinkURL" value="@item.TargetLink" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="card-body">
+                                    <div class="btnBlock">
+                                        <button type="button" class="btn btn-outline-success btnSave" data-sn="@item.Sn">儲存</button>
+                                        <button type="button" class="btn btn-outline-danger btnDel" data-sn="@item.Sn">刪除</button>
+                                    </div>
+                                    <div class="numberBlock">編號.@item.Sn</div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+@section scripts {
+    <script src="~/assets/js/carousel.js"></script>
+}
